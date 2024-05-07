@@ -1,24 +1,56 @@
 # Promptcraft
 
-TODO: Delete this and the text below, and describe your gem
+An AI generated the following summary of this project for helping you to work with AI:
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/promptcraft`. To experiment with that code, run `bin/console` for an interactive prompt.
+> Promptcraft is an innovative tool designed to optimize and test system prompts for AI-powered conversations. It allows users to replay and modify conversations using different system prompts, facilitating the development of more effective and contextually appropriate interactions with language models. Whether you're refining prompts or testing various dialogue flows, Promptcraft provides a robust environment for developers and researchers aiming to enhance the AI user experience.
+
+Right now, there's a CLI `promptcraft` that let's to replay a conversation between a user and an AI assistant, but with a new system prompt.
+
+```sh
+$ cat examples/maths/start/already_answered.yml
+system_prompt: |-
+  I like to solve maths problems.
+
+messages:
+- role: "user"
+  content: "What is 2+2?"
+- role: assistant
+  content: 2 + 2 = 4
+
+# Let's replay the conversation with a new system prompt:
+$ bundle exec exe/promptcraft \
+    --conversation examples/maths/start/already_answered.yml \
+    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
+---
+system_prompt: 'I''m terrible at maths. If I''m asked a maths question, I reply with
+  a question.
+
+  '
+messages:
+- role: user
+  content: What is 2+2?
+- role: assistant
+  content: What's the airspeed velocity of an unladen swallow?
+```
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Right now, you need to run the CLI from the source code.
 
-Install the gem and add to the application's Gemfile by executing:
+```sh
+git clone https://github.com/drnic/promptcraft
+cd promptcraft
+bin/setup
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/already_answered.yml \
+    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
+```
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+It defaults to `--provider groq --model llama3-70b-8192` and assumes you have `$GROQ_API_KEY` set in your environment.
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+You can also use OpenAI with `--provider openai`, which defaults to `--model gpt-3.5-turbo`. It assumes you have `$OPENAI_API_KEY` set in your environment.
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-
-## Usage
-
-TODO: Write usage instructions here
+You can also use Ollama locally with `--provider ollama`, which defaults to `--model llama3`. It assumes your Ollama app is running on the default port.
 
 ## Development
 

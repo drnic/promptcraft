@@ -1,0 +1,8 @@
+system_prompt: |-
+  I like to solve maths problems.
+
+messages:
+- role: "user"
+  content: "What is 2+2?"
+
+# Missing assistant final response so next iteration will add it.

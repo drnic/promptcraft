@@ -1,3 +1,6 @@
 #!/usr/bin/env ruby
 
 require "promptcraft"
+
+cmd = Promptcraft::Cli::RunCommand.new
+cmd.parse.run

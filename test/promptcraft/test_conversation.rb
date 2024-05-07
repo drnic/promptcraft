@@ -3,9 +3,9 @@ require "test_helper"
 module Promptcraft
   class TestConversation < Minitest::Test
     def setup
-      @convo = Conversation.new("I solve math problems")
-      @convo.add_message("user", "What is 2 + 2?")
-      @convo.add_message("assistant", "2 + 2 is 4.")
+      @convo = Conversation.new(system_prompt: "I solve math problems")
+      @convo.add_message(role: "user", content: "What is 2 + 2?")
+      @convo.add_message(role: "assistant", content: "2 + 2 is 4.")
     end
 
     def test_add_message_and_to_yaml
@@ -13,10 +13,10 @@ module Promptcraft
         ---
         system_prompt: I solve math problems
         messages:
-        - :role: user
-          :content: What is 2 + 2?
-        - :role: assistant
-          :content: 2 + 2 is 4.
+        - role: user
+          content: What is 2 + 2?
+        - role: assistant
+          content: 2 + 2 is 4.
       YAML
       assert_equal expected_yaml.strip, @convo.to_yaml.strip
     end
@@ -25,8 +25,7 @@ module Promptcraft
       filename = "temp_test.yaml"
       @convo.save_to_file(filename)
 
-      new_convo = Conversation.new
-      new_convo.load_from_file(filename)
+      new_convo = Conversation.load_from_file(filename)
 
       assert_equal @convo.system_prompt, new_convo.system_prompt
       assert_equal @convo.messages, new_convo.messages

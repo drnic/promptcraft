@@ -1,5 +1,9 @@
 name: Ruby
 
+env:
+  GROQ_API_KEY: 'Value Not Required in CI'
+  OPENAI_API_KEY: 'Value Not Required in CI'
+
 on:
   push:
     branches:

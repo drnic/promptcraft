@@ -3,19 +3,31 @@ require "yaml"
 class Promptcraft::Conversation
   attr_accessor :system_prompt, :messages
 
-  def initialize(system_prompt = "")
+  def initialize(system_prompt:, messages: [])
     @system_prompt = system_prompt
-    @messages = []
+    @messages = messages
   end
 
-  def add_message(role, content)
-    @messages << {role: role, content: content}
+  def add_message(role:, content:)
+    @messages << {role:, content:}
   end
 
-  def load_from_file(filename)
-    data = YAML.load_file(filename)
-    @system_prompt = data["system_prompt"]
-    @messages = data["messages"]
+  class << self
+    def load_from_file(filename)
+      data = YAML.load_file(filename, symbolize_names: true)
+      new(system_prompt: data[:system_prompt], messages: data[:messages])
+    end
+
+    # Class method to create a Conversation from an array of messages
+    def from_messages(messages)
+      if messages.empty? || messages.first[:role] != "system"
+        raise ArgumentError, "First message must be from 'system' with the prompt"
+      end
+
+      system_prompt = messages.first[:content]
+      remaining_messages = messages[1..]  # all messages after the first
+      new(system_prompt:, messages: remaining_messages)
+    end
   end
 
   def save_to_file(filename)
@@ -23,28 +35,24 @@ class Promptcraft::Conversation
   end
 
   def to_yaml
-    YAML.dump({
-      "system_prompt" => @system_prompt,
-      "messages" => @messages
-    })
+    YAML.dump(deep_stringify_keys({
+      system_prompt: @system_prompt,
+      messages: @messages
+    }))
   end
 
   def to_messages
     [{role: "system", content: @system_prompt}] + @messages
   end
 
-  # Class method to create a Conversation from an array of messages
-  def self.from_messages(messages)
-    if messages.empty? || messages.first[:role] != "system"
-      raise ArgumentError, "First message must be from 'system' with the prompt"
+  def deep_stringify_keys(value)
+    case value
+    when Hash
+      value.map { |k, v| [k.to_s, deep_stringify_keys(v)] }.to_h
+    when Array
+      value.map { |v| deep_stringify_keys(v) }
+    else
+      value
     end
-
-    system_prompt = messages.first[:content]
-    remaining_messages = messages[1..]  # all messages after the first
-    conversation = new(system_prompt)
-    remaining_messages.each do |message|
-      conversation.add_message(message[:role], message[:content])
-    end
-    conversation
   end
 end
