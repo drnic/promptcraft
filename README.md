@@ -33,6 +33,25 @@ messages:
   content: What's the airspeed velocity of an unladen swallow?
 ```
 
+## Installation
+
+Right now, you need to run the CLI from the source code.
+
+```sh
+git clone https://github.com/drnic/promptcraft
+cd promptcraft
+bin/setup
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/already_answered.yml \
+    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
+```
+
+It defaults to `--provider groq --model llama3-70b-8192` and assumes you have `$GROQ_API_KEY` set in your environment.
+
+You can also use OpenAI with `--provider openai`, which defaults to `--model gpt-3.5-turbo`. It assumes you have `$OPENAI_API_KEY` set in your environment.
+
+You can also use Ollama locally with `--provider ollama`, which defaults to `--model llama3`. It assumes your Ollama app is running on the default port.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
