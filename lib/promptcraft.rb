@@ -3,6 +3,5 @@
 require_relative "promptcraft/version"
 
 module Promptcraft
-  class Error < StandardError; end
-  # Your code goes here...
+  autoload :Conversation, "promptcraft/conversation"
 end
