@@ -13,10 +13,10 @@ module Promptcraft
         ---
         system_prompt: I solve math problems
         messages:
-        - :role: user
-          :content: What is 2 + 2?
-        - :role: assistant
-          :content: 2 + 2 is 4.
+        - role: user
+          content: What is 2 + 2?
+        - role: assistant
+          content: 2 + 2 is 4.
       YAML
       assert_equal expected_yaml.strip, @convo.to_yaml.strip
     end

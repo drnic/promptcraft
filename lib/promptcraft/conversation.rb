@@ -14,8 +14,8 @@ class Promptcraft::Conversation
 
   class << self
     def load_from_file(filename)
-      data = YAML.load_file(filename)
-      new(system_prompt: data["system_prompt"], messages: data["messages"])
+      data = YAML.load_file(filename, symbolize_names: true)
+      new(system_prompt: data[:system_prompt], messages: data[:messages])
     end
 
     # Class method to create a Conversation from an array of messages
@@ -35,13 +35,24 @@ class Promptcraft::Conversation
   end
 
   def to_yaml
-    YAML.dump({
-      "system_prompt" => @system_prompt,
-      "messages" => @messages
-    })
+    YAML.dump(deep_stringify_keys({
+      system_prompt: @system_prompt,
+      messages: @messages
+    }))
   end
 
   def to_messages
     [{role: "system", content: @system_prompt}] + @messages
+  end
+
+  def deep_stringify_keys(value)
+    case value
+    when Hash
+      value.map { |k, v| [k.to_s, deep_stringify_keys(v)] }.to_h
+    when Array
+      value.map { |v| deep_stringify_keys(v) }
+    else
+      value
+    end
   end
 end
