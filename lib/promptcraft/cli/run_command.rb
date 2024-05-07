@@ -1,6 +1,11 @@
 require "tty-option"
 require "langchain"
 
+# Pick an LLM provider + model:
+#   promptcraft --provider groq
+#   promptcraft --provider openai --model gpt-3.5-turbo
+# Pass in a prompt via CLI (-p,--prompt expects a filename so can use <(echo "..."))
+#   promptcraft -c tmp/maths/start/basic.yml -p <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
 class Promptcraft::Cli::RunCommand
   include TTY::Option
 
@@ -26,6 +31,13 @@ class Promptcraft::Cli::RunCommand
     desc "Filename of conversation"
   end
 
+  option :prompt do
+    # required
+    short "-p"
+    long "--prompt filename"
+    desc "Filename of system prompt"
+  end
+
   flag :help do
     short "-h"
     long "--help"
@@ -39,7 +51,7 @@ class Promptcraft::Cli::RunCommand
   end
 
   option :provider do
-    short "-p"
+    # short "-p"
     long "--provider provider_name"
     desc "Provider name to use for chat completion"
     default "groq"
@@ -58,6 +70,12 @@ class Promptcraft::Cli::RunCommand
       # It will check if latest iteration is complete or not
       # If it is not complete, it will continue from where it left
       conversation = Promptcraft::Conversation.load_from_file(params[:conversation])
+
+      if (prompt_file = params[:prompt])
+        prompt = File.read(prompt_file)
+        conversation.system_prompt = prompt
+      end
+
       messages = conversation.to_messages
       response = Promptcraft::Command::LlmChatCommand.new(messages:, llm:).execute
 
