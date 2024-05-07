@@ -27,6 +27,10 @@ end
 # r = @llm.chat(messages: c.to_messages)
 # message = r.completions&.dig(0, "message")
 # => {"role"=>"assistant", "content"=>"That's an easy one! The answer is... 4!"}
+#
+# c = Promptcraft::Conversation.load_from_file("tmp/maths/start/basic.yml")
+# cmd = Promptcraft::Command::LlmChatCommand.new(messages: c.to_messages, llm: @llm)
+# cmd.execute
 
 require "irb"
 IRB.start(__FILE__)
