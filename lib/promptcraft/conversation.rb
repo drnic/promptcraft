@@ -8,8 +8,8 @@ class Promptcraft::Conversation
     @messages = []
   end
 
-  def add_message(role, content)
-    @messages << {role: role, content: content}
+  def add_message(role:, content:)
+    @messages << {role:, content:}
   end
 
   class << self
@@ -30,7 +30,7 @@ class Promptcraft::Conversation
       remaining_messages = messages[1..]  # all messages after the first
       conversation = new(system_prompt)
       remaining_messages.each do |message|
-        conversation.add_message(message[:role], message[:content])
+        conversation.add_message(**message)
       end
       conversation
     end

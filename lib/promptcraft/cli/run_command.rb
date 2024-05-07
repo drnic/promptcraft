@@ -60,7 +60,12 @@ class Promptcraft::Cli::RunCommand
       conversation = Promptcraft::Conversation.load_from_file(params[:conversation])
       messages = conversation.to_messages
       response = Promptcraft::Command::LlmChatCommand.new(messages:, llm:).execute
-      pp response
+
+      # expect response to be a Hash with role and content keys
+      # expect response[:role] to be "assistant"
+      # expect response[:content] to be a String
+      conversation.messages << response
+      puts conversation.to_yaml
     end
   end
 end

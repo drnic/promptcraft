@@ -4,8 +4,8 @@ module Promptcraft
   class TestConversation < Minitest::Test
     def setup
       @convo = Conversation.new("I solve math problems")
-      @convo.add_message("user", "What is 2 + 2?")
-      @convo.add_message("assistant", "2 + 2 is 4.")
+      @convo.add_message(role: "user", content: "What is 2 + 2?")
+      @convo.add_message(role: "assistant", content: "2 + 2 is 4.")
     end
 
     def test_add_message_and_to_yaml
