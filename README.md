@@ -1,24 +1,37 @@
 # Promptcraft
 
-TODO: Delete this and the text below, and describe your gem
+An AI generated the following summary of this project for helping you to work with AI:
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/promptcraft`. To experiment with that code, run `bin/console` for an interactive prompt.
+> Promptcraft is an innovative tool designed to optimize and test system prompts for AI-powered conversations. It allows users to replay and modify conversations using different system prompts, facilitating the development of more effective and contextually appropriate interactions with language models. Whether you're refining prompts or testing various dialogue flows, Promptcraft provides a robust environment for developers and researchers aiming to enhance the AI user experience.
 
-## Installation
+Right now, there's a CLI `promptcraft` that let's to replay a conversation between a user and an AI assistant, but with a new system prompt.
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+```sh
+$ cat examples/maths/start/already_answered.yml
+system_prompt: |-
+  I like to solve maths problems.
 
-Install the gem and add to the application's Gemfile by executing:
+messages:
+- role: "user"
+  content: "What is 2+2?"
+- role: assistant
+  content: 2 + 2 = 4
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+# Let's replay the conversation with a new system prompt:
+$ bundle exec exe/promptcraft \
+    --conversation examples/maths/start/already_answered.yml \
+    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
+---
+system_prompt: 'I''m terrible at maths. If I''m asked a maths question, I reply with
+  a question.
 
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-
-## Usage
-
-TODO: Write usage instructions here
+  '
+messages:
+- role: user
+  content: What is 2+2?
+- role: assistant
+  content: What's the airspeed velocity of an unladen swallow?
+```
 
 ## Development
 
