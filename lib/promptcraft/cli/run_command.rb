@@ -65,25 +65,14 @@ class Promptcraft::Cli::RunCommand
     else
       llm = Promptcraft::Llm.langchain(provider: params[:provider], model: params[:model])
 
-      pp params.to_h
-      # It will find latest iteration
-      # It will check if latest iteration is complete or not
-      # If it is not complete, it will continue from where it left
       conversation = Promptcraft::Conversation.load_from_file(params[:conversation])
 
-      if (prompt_file = params[:prompt])
-        prompt = File.read(prompt_file)
-        conversation.system_prompt = prompt
-      end
+      system_prompt = conversation.system_prompt
+      system_prompt = File.read(params[:prompt]) if params[:prompt]
 
-      messages = conversation.to_messages
-      response = Promptcraft::Command::LlmChatCommand.new(messages:, llm:).execute
-
-      # expect response to be a Hash with role and content keys
-      # expect response[:role] to be "assistant"
-      # expect response[:content] to be a String
-      conversation.messages << response
-      puts conversation.to_yaml
+      cmd = Promptcraft::Command::RechatConversationCommand.new(system_prompt: system_prompt, conversation: conversation, llm: llm)
+      cmd.execute
+      puts cmd.updated_conversation.to_yaml
     end
   end
 end
