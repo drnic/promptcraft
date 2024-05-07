@@ -7,3 +7,4 @@ gemspec
 
 gem "standardrb", "~> 1.0"
 gem "langchainrb", github: "patterns-ai-core/langchainrb"
+gem "ruby-openai", github: "drnic/ruby-openai", branch: "remove-warning-no-org"
