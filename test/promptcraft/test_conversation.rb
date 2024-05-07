@@ -25,8 +25,7 @@ module Promptcraft
       filename = "temp_test.yaml"
       @convo.save_to_file(filename)
 
-      new_convo = Conversation.new
-      new_convo.load_from_file(filename)
+      new_convo = Conversation.load_from_file(filename)
 
       assert_equal @convo.system_prompt, new_convo.system_prompt
       assert_equal @convo.messages, new_convo.messages

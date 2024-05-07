@@ -6,3 +6,4 @@ source "https://rubygems.org"
 gemspec
 
 gem "standardrb", "~> 1.0"
+gem "langchainrb", github: "patterns-ai-core/langchainrb"
