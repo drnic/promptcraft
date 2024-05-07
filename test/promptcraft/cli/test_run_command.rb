@@ -13,7 +13,7 @@ module Promptcraft::Cli
 
     def test_required_options
       @cmd.parse(%w[])
-      assert_output(/Option '--dir' must be provided/i) { @cmd.run }
+      assert_output(/Option '--conversation' must be provided/i) { @cmd.run }
     end
   end
 end
