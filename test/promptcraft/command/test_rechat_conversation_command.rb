@@ -17,11 +17,10 @@ module Promptcraft::Command
 
       llm = Promptcraft::Llm.langchain(provider: "openai")
 
-      stub_request(:post, "https://api.openai.com/v1/chat/completions")
-        .with(
-          body: {messages: [{role: "system", content: "I solve math problems"}, {role: "user", content: "What is 2 + 2?"}], model: "gpt-3.5-turbo", n: 1, temperature: 0.0}.to_json
-        )
-        .to_return(status: 200, body: {"choices" => [{"message" => {"role" => "assistant", "content" => "2 + 2 is 4."}}]}.to_json, headers: {"Content-Type" => "application/json"})
+      stub_openai_chat_completion(
+        messages: [{role: "system", content: prompt}, {role: "user", content: "What is 2 + 2?"}],
+        response_content: "2 + 2 is 4."
+      )
 
       command = RechatConversationCommand.new(prompt:, conversation: convo, llm:)
       command.execute
@@ -41,21 +40,24 @@ module Promptcraft::Command
 
       command = RechatConversationCommand.new(prompt:, conversation: convo, llm:)
 
+      stub_openai_chat_completion(
+        messages: [{role: "system", content: prompt}, {role: "user", content: "What is 2 + 2?"}],
+        response_content: "If you have two apples and two oranges, how many do you have?"
+      )
+
+      pp command.execute
+    end
+
+    def stub_openai_chat_completion(messages:, response_content:, model: "gpt-3.5-turbo")
       stub_request(:post, "https://api.openai.com/v1/chat/completions")
         .with(
-          body: {messages: [
-            {role: "system", content: prompt},
-            {role: "user", content: "What is 2 + 2?"}
-          ], model: "gpt-3.5-turbo", n: 1, temperature: 0.0}.to_json
+          body: {messages: messages, model: model, n: 1, temperature: 0.0}.to_json
         )
         .to_return(
           status: 200,
           headers: {"Content-Type" => "application/json"},
-          body:
-            {"choices" => [{"message" => {"role" => "assistant", "content" => "If you have two apples and two oranges, how many do you have?"}}]}.to_json
+          body: {"choices" => [{"message" => {"role" => "assistant", "content" => response_content}}]}.to_json
         )
-
-      pp command.execute
     end
   end
 end
