@@ -5,6 +5,7 @@ require "promptcraft"
 
 require "minitest/autorun"
 require "vcr"
+require "webmock/minitest"
 
 VCR.configure do |config|
   config.cassette_library_dir = "test/fixtures/vcr_cassettes"
