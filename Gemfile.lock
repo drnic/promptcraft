@@ -1,16 +1,7 @@
 GIT
-  remote: https://github.com/drnic/ruby-openai.git
-  revision: dd3d0daff18de72aba993c99f9444e34b680d3b7
-  branch: remove-warning-no-org
-  specs:
-    ruby-openai (7.0.1)
-      event_stream_parser (>= 0.3.0, < 2.0.0)
-      faraday (>= 1)
-      faraday-multipart (>= 1)
-
-GIT
-  remote: https://github.com/patterns-ai-core/langchainrb.git
-  revision: 4c4c07030dc012892b00fe59536055045a86293c
+  remote: https://github.com/drnic/langchainrb.git
+  revision: 4f1afb5e9048ac61dab8b35f333b8868ebbc3107
+  branch: ollama-response
   specs:
     langchainrb (0.12.0)
       activesupport (>= 7.0.8)
@@ -23,11 +14,23 @@ GIT
       to_bool (~> 2.0.0)
       zeitwerk (~> 2.5)
 
+GIT
+  remote: https://github.com/drnic/ruby-openai.git
+  revision: dd3d0daff18de72aba993c99f9444e34b680d3b7
+  branch: remove-warning-no-org
+  specs:
+    ruby-openai (7.0.1)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
+
 PATH
   remote: .
   specs:
     promptcraft (0.1.0)
+      faraday
       langchainrb
+      ruby-openai
       tty-option
 
 GEM
@@ -143,6 +146,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  faraday (~> 2.0)
   langchainrb!
   minitest (~> 5.0)
   promptcraft!

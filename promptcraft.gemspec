@@ -34,12 +34,13 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "langchainrb"
+  spec.add_dependency "faraday"
+  spec.add_dependency "ruby-openai"
+
   spec.add_dependency "tty-option"
 
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "vcr", "~> 6.0"
   spec.add_development_dependency "webmock", "~> 3.0"
-
-  spec.add_development_dependency "ruby-openai"
 end

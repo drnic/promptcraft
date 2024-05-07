@@ -10,7 +10,9 @@ class Promptcraft::Command::LlmChatCommand
 
   def execute
     response = @llm.chat(messages:)
-    response.completions&.dig(0, "message")
+    # response.chat_completions
+    # pp response.chat_completion
+    response.chat_completions&.dig(0, "message")
   rescue => e
     puts e.message
     raise

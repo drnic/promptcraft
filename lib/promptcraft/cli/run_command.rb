@@ -61,7 +61,14 @@ class Promptcraft::Cli::RunCommand
       when "openai"
         Langchain::LLM::OpenAI.new(
           api_key: ENV.fetch("OPENAI_API_KEY"),
-          default_options: {chat_completion_model_name: params[:model] || "gpt-4-turbo"}
+          default_options: {chat_completion_model_name: params[:model] || "gpt-3.5-turbo"}
+        )
+      when "ollama"
+        Langchain::LLM::Ollama.new(
+          default_options: {
+            completion_model_name: params[:model] || "llama3",
+            chat_completion_model_name: params[:model] || "llama3"
+          }
         )
       end
 
