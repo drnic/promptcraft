@@ -32,21 +32,38 @@ class Promptcraft::Cli::RunCommand
     desc "Print usage"
   end
 
+  option :model do
+    short "-m"
+    long "--model model_name"
+    desc "Model name to use for chat completion"
+  end
+
+  option :provider do
+    short "-p"
+    long "--provider provider_name"
+    desc "Provider name to use for chat completion"
+    default "groq"
+  end
+
   def run
     if params[:help]
       print help
     elsif params.errors.any?
       puts params.errors.summary
     else
-      llm = Langchain::LLM::OpenAI.new(
-        api_key: ENV.fetch("GROQ_API_KEY", "fake-key"),
-        llm_options: {
-          uri_base: "https://api.groq.com/openai/"
-        },
-        default_options: {
-          chat_completion_model_name: "llama3-70b-8192"
-        }
-      )
+      llm = case params[:provider]
+      when "groq"
+        Langchain::LLM::OpenAI.new(
+          api_key: ENV.fetch("GROQ_API_KEY"),
+          llm_options: {uri_base: "https://api.groq.com/openai/"},
+          default_options: {chat_completion_model_name: params[:model] || "llama3-70b-8192"}
+        )
+      when "openai"
+        Langchain::LLM::OpenAI.new(
+          api_key: ENV.fetch("OPENAI_API_KEY"),
+          default_options: {chat_completion_model_name: params[:model] || "gpt-4-turbo"}
+        )
+      end
 
       pp params.to_h
       # It will find latest iteration
