@@ -51,26 +51,7 @@ class Promptcraft::Cli::RunCommand
     elsif params.errors.any?
       puts params.errors.summary
     else
-      llm = case params[:provider]
-      when "groq"
-        Langchain::LLM::OpenAI.new(
-          api_key: ENV.fetch("GROQ_API_KEY"),
-          llm_options: {uri_base: "https://api.groq.com/openai/"},
-          default_options: {chat_completion_model_name: params[:model] || "llama3-70b-8192"}
-        )
-      when "openai"
-        Langchain::LLM::OpenAI.new(
-          api_key: ENV.fetch("OPENAI_API_KEY"),
-          default_options: {chat_completion_model_name: params[:model] || "gpt-3.5-turbo"}
-        )
-      when "ollama"
-        Langchain::LLM::Ollama.new(
-          default_options: {
-            completion_model_name: params[:model] || "llama3",
-            chat_completion_model_name: params[:model] || "llama3"
-          }
-        )
-      end
+      llm = Promptcraft::Llm.langchain(provider: params[:provider], model: params[:model])
 
       pp params.to_h
       # It will find latest iteration
