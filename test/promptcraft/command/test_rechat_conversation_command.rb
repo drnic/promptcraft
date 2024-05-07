@@ -48,10 +48,18 @@ module Promptcraft::Command
       )
 
       command.execute
+
+      updated_conversation = command.updated_conversation
+      assert_equal "When asked a question, I reply with a question.", updated_conversation.system_prompt
+      assert_equal 2, updated_conversation.messages.size
+      assert_equal updated_conversation.messages, [
+        {role: "user", content: "What is 2 + 2?"},
+        {role: "assistant", content: "If you have two apples and two oranges, how many do you have?"}
+      ]
     end
 
     def test_two_messages_missing_assistant
-      system_prompt = "I solve math problems"
+      # system_prompt = "I solve math problems"
     end
 
     def stub_openai_chat_completion(messages:, response_content:, model: "gpt-3.5-turbo")

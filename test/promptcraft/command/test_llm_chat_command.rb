@@ -10,8 +10,8 @@ module Promptcraft::Command
         messages = [{role: "user", content: "What is 2 + 2?"}]
         command = LlmChatCommand.new(messages:, llm:)
         message = command.execute
-        assert_equal message["role"], "assistant"
-        assert_equal message["content"], "The answer to 2 + 2 is 4."
+        assert_equal message[:role], "assistant"
+        assert_equal message[:content], "The answer to 2 + 2 is 4."
       end
     end
   end
