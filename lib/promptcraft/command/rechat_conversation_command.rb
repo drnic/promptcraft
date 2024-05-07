@@ -1,6 +1,6 @@
 class Promptcraft::Command::RechatConversationCommand
-  def initialize(prompt:, conversation:, llm:)
-    @prompt = prompt
+  def initialize(system_prompt:, conversation:, llm:)
+    @system_prompt = system_prompt
     @conversation = conversation
     @llm = llm
   end
@@ -11,7 +11,7 @@ class Promptcraft::Command::RechatConversationCommand
   # then ask the LLM to re-chat the preceding messages and generate a new response.
   def execute
     @updated_conversation = @conversation.dup
-    @updated_conversation.system_prompt = @prompt
+    @updated_conversation.system_prompt = @system_prompt
 
     # Iterate over the messages in the conversation, finding role=asssistant messages,
     # and re-chatting the preceding messages to generate a new response.
