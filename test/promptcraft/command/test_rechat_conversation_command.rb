@@ -10,7 +10,7 @@ module Promptcraft::Command
       VCR.turn_on!
     end
 
-    def test_one_message_missing_assistant
+    def test_generate_assistant_response
       system_prompt = "I solve math problems"
       convo = Promptcraft::Conversation.new(system_prompt:, messages: [{role: "user", content: "What is 2 + 2?"}])
 
@@ -24,10 +24,16 @@ module Promptcraft::Command
       command = RechatConversationCommand.new(system_prompt:, conversation: convo, llm:)
       command.execute
 
-      # TODO: it should have added an assistant message
+      updated_conversation = command.updated_conversation
+      assert_equal system_prompt, updated_conversation.system_prompt
+      assert_equal 2, updated_conversation.messages.size
+      assert_equal updated_conversation.messages, [
+        {role: "user", content: "What is 2 + 2?"},
+        {role: "assistant", content: "2 + 2 is 4."}
+      ]
     end
 
-    def test_one_message_replay_assistant
+    def test_replay_assistant_response
       system_prompt = "I solve math problems"
       convo = Promptcraft::Conversation.new(system_prompt:, messages: [
         {role: "user", content: "What is 2 + 2?"},
