@@ -63,7 +63,7 @@ class Promptcraft::Cli::RunCommand
     elsif params.errors.any?
       puts params.errors.summary
     else
-      llm = Promptcraft::Llm.langchain(provider: params[:provider], model: params[:model])
+      llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
 
       conversation = Promptcraft::Conversation.load_from_file(params[:conversation])
 
