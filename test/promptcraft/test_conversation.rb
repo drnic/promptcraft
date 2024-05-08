@@ -25,8 +25,10 @@ module Promptcraft
       filename = "temp_test.yaml"
       @convo.save_to_file(filename)
 
-      new_convo = Conversation.load_from_file(filename)
+      new_convos = Conversation.load_from_file(filename)
 
+      assert_equal 1, new_convos.size
+      new_convo = new_convos.first
       assert_equal @convo.system_prompt, new_convo.system_prompt
       assert_equal @convo.messages, new_convo.messages
 
@@ -38,8 +40,10 @@ module Promptcraft
       @convo.llm = Llm.new(provider: "groq", model: "llama3-70b-8192")
       @convo.save_to_file(filename)
 
-      new_convo = Conversation.load_from_file(filename)
+      new_convos = Conversation.load_from_file(filename)
 
+      assert_equal 1, new_convos.size
+      new_convo = new_convos.first
       assert_equal @convo.system_prompt, new_convo.system_prompt
       assert_equal @convo.messages, new_convo.messages
       assert new_convo.llm
