@@ -88,6 +88,16 @@ class Promptcraft::Cli::RunCommand
         end
       warn "No system prompt provided." unless system_prompt
 
+      # TODO: --conversation is an array of filenames
+      # and the output is multiple YAML documents combined
+      #
+      # and --conversation can also load multiple YAML documents from one file
+      # docs = %(---\nhi: 1\n---\nthere: 2\n)
+      # docs.split("---\n").map {|doc| YAML.load(doc)}.compact
+      # => [{"hi"=>1}, {"there"=>2}]
+      #
+      # Rechat could be threaded to run many rechat conversations at once
+
       cmd = Promptcraft::Command::RechatConversationCommand.new(system_prompt: system_prompt, conversation: conversation, llm: llm)
       cmd.execute
       puts cmd.updated_conversation.to_yaml

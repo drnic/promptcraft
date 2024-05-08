@@ -23,6 +23,8 @@ module Promptcraft::Command
 
       command = RechatConversationCommand.new(system_prompt:, conversation: convo, llm:)
       command.execute
+
+      # TODO: it should have added an assistant message
     end
 
     def test_one_message_replay_assistant
@@ -58,6 +60,7 @@ module Promptcraft::Command
       ]
     end
 
+    # TODO: test_two_messages_missing_assistant
     def test_two_messages_missing_assistant
       # system_prompt = "I solve math problems"
     end
