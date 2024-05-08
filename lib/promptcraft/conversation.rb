@@ -75,6 +75,14 @@ class Promptcraft::Conversation
     }.compact))
   end
 
+  def to_json
+    deep_stringify_keys({
+      system_prompt: @system_prompt&.strip,
+      llm: @llm&.to_h,
+      messages: @messages
+    }.compact).to_json
+  end
+
   def to_messages
     [{role: "system", content: @system_prompt}] + @messages
   end

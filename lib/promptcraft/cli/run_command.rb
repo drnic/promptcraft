@@ -56,6 +56,13 @@ class Promptcraft::Cli::RunCommand
     desc "Provider name to use for chat completion"
   end
 
+  option :format do
+    short "-f"
+    long "--format format"
+    desc "Output format (yaml, json)"
+    default "yaml"
+  end
+
   def run
     if params[:help]
       print help
@@ -95,7 +102,11 @@ class Promptcraft::Cli::RunCommand
 
       # Output. Currently we just output each conversation to the console as YAML
       updated_conversations.each do |conversation|
-        puts conversation.to_yaml
+        if params[:format] == "json"
+          puts conversation.to_json
+        else
+          puts conversation.to_yaml
+        end
       end
     end
   end
