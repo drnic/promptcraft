@@ -66,6 +66,7 @@ class Promptcraft::Cli::RunCommand
       llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
 
       conversation = Promptcraft::Conversation.load_from_file(params[:conversation])
+      conversation.llm = llm
 
       system_prompt = conversation.system_prompt
       system_prompt = File.read(params[:prompt]) if params[:prompt]

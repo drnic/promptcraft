@@ -22,10 +22,11 @@ $ bundle exec exe/promptcraft \
     --conversation examples/maths/start/already_answered.yml \
     --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
 ---
-system_prompt: 'I''m terrible at maths. If I''m asked a maths question, I reply with
+system_prompt: I'm terrible at maths. If I'm asked a maths question, I reply with
   a question.
-
-  '
+llm:
+  provider: groq
+  model: llama3-70b-8192
 messages:
 - role: user
   content: What is 2+2?
