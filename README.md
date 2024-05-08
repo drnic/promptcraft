@@ -6,7 +6,7 @@ An AI generated the following summary of this project for helping you to work wi
 
 Right now, there's a CLI `promptcraft` that let's to replay a conversation between a user and an AI assistant, but with a new system prompt.
 
-```sh
+```plain
 $ cat examples/maths/start/already_answered.yml
 system_prompt: |-
   I like to solve maths problems.
@@ -62,7 +62,7 @@ messages:
 
 The CLI will replay each conversation with the new system prompt.
 
-```sh
+```plain
 bundle exec exe/promptcraft \
     --conversation examples/maths/start/already_answered_multiple.yml \
     --prompt "I like cats. Answer any questions using cats."
@@ -99,11 +99,20 @@ messages:
 
 The example [examples/maths/start/already_answered_multiple_providers.yml](examples/maths/start/already_answered_multiple_providers.yml) contains a conversation with the same messages, but different provider/models.
 
+Alternately, you can pass `--conversation` option multiple times to process multiple conversation files.
+
+```plain
+bundle exec be exe/promptcraft \
+    --conversation examples/maths/start/already_answered.yml \
+    --conversation examples/maths/start/already_answered_gpt4.yml \
+    --prompt "Answer like a pirate. A maths pirate."
+```
+
 ## Installation
 
 Right now, you need to run the CLI from the source code.
 
-```sh
+```plain
 git clone https://github.com/drnic/promptcraft
 cd promptcraft
 bin/setup
@@ -121,7 +130,7 @@ You can also use Ollama locally with `--provider ollama`, which defaults to `--m
 
 If the conversation file has an `llm` key with `provider` and `model` keys, then those will be used instead of the defaults.
 
-```sh
+```plain
 bundle exec exe/promptcraft \
     --conversation examples/maths/start/already_answered_gpt4.yml \
     --prompt "I always reply with a question"

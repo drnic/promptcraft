@@ -25,7 +25,7 @@ class Promptcraft::Cli::RunCommand
   end
 
   option :conversation do
-    required
+    arity one_or_more
     short "-c"
     long "--conversation filename"
     desc "Filename of conversation"
@@ -62,7 +62,10 @@ class Promptcraft::Cli::RunCommand
     elsif params.errors.any?
       puts params.errors.summary
     else
-      conversations = Promptcraft::Conversation.load_from_file(params[:conversation])
+      conversations = params[:conversation].each_with_object([]) do |filename, convos|
+        Promptcraft::Conversation.load_from_file(filename)
+        convos.push(*Promptcraft::Conversation.load_from_file(filename))
+      end
 
       if (prompt = params[:prompt])
         # if prompt is a file, load it; else set the prompt to the value
@@ -73,26 +76,14 @@ class Promptcraft::Cli::RunCommand
         end
       end
 
-      # TODO: --conversation is an array of filenames
-      # and the output is multiple YAML documents combined
-      #
-      # and --conversation can also load multiple YAML documents from one file
-      # docs = %(---\nhi: 1\n---\nthere: 2\n)
-      # docs.split("---\n").map {|doc| YAML.load(doc)}.compact
-      # => [{"hi"=>1}, {"there"=>2}]
-      #
-      # Rechat could be threaded to run many rechat conversations at once
-
+      # TODO: Rechat loop could be threaded to run many rechat conversations at once
       updated_conversations = conversations.map do |conversation|
-        if params[:provider]
-          llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
-          conversation.llm = llm
+        llm = if params[:provider]
+          Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
         elsif conversation.llm
-          llm = conversation.llm
+          conversation.llm
         else
-          params[:provider] = "groq"
-          llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
-          conversation.llm = llm
+          Promptcraft::Llm.new
         end
 
         system_prompt = new_system_prompt || conversation.system_prompt

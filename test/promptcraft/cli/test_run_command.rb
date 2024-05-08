@@ -13,7 +13,7 @@ module Promptcraft::Cli
 
     def test_required_options
       @cmd.parse(%w[])
-      assert_output(/Option '--conversation' must be provided/i) { @cmd.run }
+      assert_output(/Option '--conversation' should appear at least 1 time/i) { @cmd.run }
     end
   end
 end
