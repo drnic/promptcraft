@@ -4,8 +4,10 @@ require "langchain"
 # Pick an LLM provider + model:
 #   promptcraft --provider groq
 #   promptcraft --provider openai --model gpt-3.5-turbo
-# Pass in a prompt via CLI (-p,--prompt expects a filename so can use <(echo "..."))
+# Pass in a prompt via CLI (-p,--prompt expects a string, or filename)
+#   promptcraft -c tmp/maths/start/basic.yml -p "I'm terrible at maths. If I'm asked a maths question, I reply with a question."
 #   promptcraft -c tmp/maths/start/basic.yml -p <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
+# The prompt file can also be YAML with system_prompt: key.
 class Promptcraft::Cli::RunCommand
   include TTY::Option
 
@@ -17,13 +19,6 @@ class Promptcraft::Cli::RunCommand
     desc "Re-run conversation against new system prompt"
   end
 
-  option :directory do
-    # required
-    short "-d"
-    long "--dir path"
-    desc "Directory for prompt and conversation files"
-  end
-
   option :conversation do
     arity one_or_more
     short "-c"
@@ -32,10 +27,9 @@ class Promptcraft::Cli::RunCommand
   end
 
   option :prompt do
-    # required
     short "-p"
-    long "--prompt filename"
-    desc "Filename of system prompt"
+    long "--prompt prompt"
+    desc "String or filename containing system prompt"
   end
 
   flag :help do
@@ -51,7 +45,6 @@ class Promptcraft::Cli::RunCommand
   end
 
   option :provider do
-    # short "-p"
     long "--provider provider_name"
     desc "Provider name to use for chat completion"
   end
@@ -80,6 +73,15 @@ class Promptcraft::Cli::RunCommand
           File.read(prompt)
         else
           prompt
+        end
+
+        # If new_system_prompt is YAML and a Hash, use "system_prompt" key
+        begin
+          obj = YAML.load(new_system_prompt, symbolize_keys: true)
+          if obj.is_a?(Hash) && obj[:system_prompt]
+            new_system_prompt = obj[:system_prompt]
+          end
+        rescue
         end
       end
 
