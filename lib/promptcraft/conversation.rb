@@ -21,7 +21,7 @@ class Promptcraft::Conversation
         YAML.parse_stream(file) do |doc|
           doc = deep_symbolize_keys(doc.to_ruby)
           system_prompt = doc[:system_prompt]
-          messages = doc[:messages]
+          messages = doc[:messages] || []
           convo = new(system_prompt: system_prompt, messages: messages)
           if (llm = doc[:llm])
             convo.llm = Promptcraft::Llm.from_h(llm)
