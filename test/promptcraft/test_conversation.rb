@@ -21,7 +21,7 @@ module Promptcraft
       assert_equal expected_yaml.strip, @convo.to_yaml.strip
     end
 
-    def test_load_from_file_and_save_to_file
+    def test_load_from_file_and_save_to_file_without_llm
       filename = "temp_test.yaml"
       @convo.save_to_file(filename)
 
@@ -29,6 +29,21 @@ module Promptcraft
 
       assert_equal @convo.system_prompt, new_convo.system_prompt
       assert_equal @convo.messages, new_convo.messages
+
+      File.delete(filename) if File.exist?(filename)
+    end
+
+    def test_load_from_file_and_save_to_file_with_llm
+      filename = "temp_test.yaml"
+      @convo.llm = Llm.new(provider: "groq", model: "llama3-70b-8192")
+      @convo.save_to_file(filename)
+
+      new_convo = Conversation.load_from_file(filename)
+
+      assert_equal @convo.system_prompt, new_convo.system_prompt
+      assert_equal @convo.messages, new_convo.messages
+      assert new_convo.llm
+      assert_equal @convo.llm.to_h, new_convo.llm.to_h
 
       File.delete(filename) if File.exist?(filename)
     end

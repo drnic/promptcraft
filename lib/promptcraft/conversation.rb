@@ -2,10 +2,12 @@ require "yaml"
 
 class Promptcraft::Conversation
   attr_accessor :system_prompt, :messages
+  attr_accessor :llm
 
-  def initialize(system_prompt:, messages: [])
+  def initialize(system_prompt:, messages: [], llm: nil)
     @system_prompt = system_prompt
     @messages = messages
+    @llm = llm
   end
 
   def add_message(role:, content:)
@@ -15,7 +17,11 @@ class Promptcraft::Conversation
   class << self
     def load_from_file(filename)
       data = YAML.load_file(filename, symbolize_names: true)
-      new(system_prompt: data[:system_prompt], messages: data[:messages])
+      convo = new(system_prompt: data[:system_prompt], messages: data[:messages])
+      if (llm = data[:llm])
+        convo.llm = Promptcraft::Llm.from_h(llm)
+      end
+      convo
     end
 
     # Class method to create a Conversation from an array of messages
@@ -34,11 +40,18 @@ class Promptcraft::Conversation
     File.write(filename, to_yaml)
   end
 
+  # system_prompt: 'I like to solve maths problems.'
+  # messages:
+  # - role: "user"
+  #   content: "What is 2+2?"
+  # - role: assistant
+  #   content: 2 + 2 = 4
   def to_yaml
     YAML.dump(deep_stringify_keys({
-      system_prompt: @system_prompt,
+      system_prompt: @system_prompt&.strip,
+      llm: @llm&.to_h,
       messages: @messages
-    }))
+    }.compact))
   end
 
   def to_messages

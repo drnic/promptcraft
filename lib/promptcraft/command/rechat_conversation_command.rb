@@ -5,13 +5,13 @@ class Promptcraft::Command::RechatConversationCommand
     @llm = llm
   end
 
-  attr_accessor :conversation, :llm
+  attr_accessor :system_prompt, :conversation, :llm
   attr_reader :updated_conversation
 
   # At each point in @conversation messages where the assistant has replied, or not yet replied,
   # then ask the LLM to re-chat the preceding messages and generate a new response.
   def execute
-    @updated_conversation = Promptcraft::Conversation.new(system_prompt: @system_prompt)
+    @updated_conversation = Promptcraft::Conversation.new(system_prompt:, llm:)
 
     conversation.messages.each do |message|
       role = message[:role] || message["role"]

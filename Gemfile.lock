@@ -28,6 +28,7 @@ PATH
   remote: .
   specs:
     promptcraft (0.1.0)
+      activesupport
       faraday
       langchainrb
       ruby-openai

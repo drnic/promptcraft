@@ -5,7 +5,7 @@ require "openai"
 module Promptcraft::Command
   class TestLlmChatCommand < Minitest::Test
     def test_basic_maths_groq
-      llm = Promptcraft::Llm.langchain(provider: "groq")
+      llm = Promptcraft::Llm.new(provider: "groq")
       VCR.use_cassette("groq/llama3-70b/llm_chat_command/test_basic_maths_groq") do
         messages = [{role: "user", content: "What is 2 + 2?"}]
         command = LlmChatCommand.new(messages:, llm:)
