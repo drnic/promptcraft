@@ -34,11 +34,17 @@ class Promptcraft::Conversation
     File.write(filename, to_yaml)
   end
 
+  # system_prompt: 'I like to solve maths problems.'
+  # messages:
+  # - role: "user"
+  #   content: "What is 2+2?"
+  # - role: assistant
+  #   content: 2 + 2 = 4
   def to_yaml
     YAML.dump(deep_stringify_keys({
       system_prompt: @system_prompt,
       messages: @messages
-    }))
+    }.compact))
   end
 
   def to_messages
