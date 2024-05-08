@@ -149,6 +149,45 @@ messages:
 
 ## Examples
 
+### Missing assistant reply
+
+If you create a conversation and the last message is from the user, then the assistant's reply is missing. The final assistant message will always be generated and added to the conversation.
+
+For example, this basic chat only contains the user's initial message:
+
+```yaml
+system_prompt: |-
+  I like to solve maths problems.
+
+messages:
+- role: "user"
+  content: "What is 2+2?"
+```
+
+When we replay the conversation with the same system prompt (by omitting the `--prompt` option), it will add the missing assistant reply:
+
+```plain
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/basic.yml
+```
+
+The output might be:
+
+```yaml
+---
+system_prompt: I like to solve maths problems.
+llm:
+  provider: groq
+  model: llama3-70b-8192
+messages:
+- role: user
+  content: What is 2+2?
+- role: assistant
+  content: That's an easy one! The answer is... 4!
+```
+
+### Limericks
+
 Here are some previously [generated limericks](examples/maths/start/many_limericks.yml). To regenerate them to start with letter "E" on each line:
 
 ```plain
