@@ -20,7 +20,7 @@ messages:
 # Let's replay the conversation with a new system prompt:
 $ bundle exec exe/promptcraft \
     --conversation examples/maths/start/already_answered.yml \
-    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.") \
+    --prompt "I'm terrible at maths. If I'm asked a maths question, I reply with a question." \
     --provider groq
 ---
 system_prompt: I'm terrible at maths. If I'm asked a maths question, I reply with
@@ -45,7 +45,7 @@ cd promptcraft
 bin/setup
 bundle exec exe/promptcraft \
     --conversation examples/maths/start/already_answered.yml \
-    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.") \
+    --prompt "I'm terrible at maths. If I'm asked a maths question, I reply with a question." \
     --provider groq
 ```
 
@@ -60,7 +60,7 @@ If the conversation file has an `llm` key with `provider` and `model` keys, then
 ```sh
 bundle exec exe/promptcraft \
     --conversation examples/maths/start/already_answered_gpt4.yml \
-    --prompt <(echo "I always reply with a question.")
+    --prompt "I always reply with a question"
 
 ---
 system_prompt: I always reply with a question.
