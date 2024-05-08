@@ -186,6 +186,37 @@ messages:
   content: That's an easy one! The answer is... 4!
 ```
 
+### Only a system message
+
+Similarly, if the [conversation only has a system prompt](examples/maths/start/system_only.yml) then an initial assistant message will be generated.
+
+```plain
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/system_only.yml
+```
+
+The output might be:
+
+```yaml
+---
+system_prompt: I like to solve maths problems.
+llm:
+  provider: groq
+  model: llama3-70b-8192
+messages:
+- role: assistant
+  content: |-
+    A math enthusiast! I'd be happy to provide you with some math problems to solve. What level of math are you interested in? Do you want:
+
+    1. Basic algebra (e.g., linear equations, quadratic equations)
+    2. Geometry (e.g., points, lines, triangles, circles)
+    3. Calculus (e.g., limits, derivatives, integrals)
+    4. Number theory (e.g., prime numbers, modular arithmetic)
+    5. Something else (please specify)
+
+    Let me know, and I'll provide you with a problem to solve!
+```
+
 ### Limericks
 
 Here are some previously [generated limericks](examples/maths/start/many_limericks.yml). To regenerate them to start with letter "E" on each line:
@@ -193,8 +224,7 @@ Here are some previously [generated limericks](examples/maths/start/many_limeric
 ```plain
 bundle exec exe/promptcraft \
     --conversation examples/maths/start/many_limericks.yml \
-    --prompt "I am excellent at limericks. I always start each line
-with the letter E."
+    --prompt "I am excellent at limericks. I always start each line with the letter E."
 ```
 
 It might still include some preamble in each response. To try to encourage the LLM to remove it:
@@ -202,8 +232,7 @@ It might still include some preamble in each response. To try to encourage the L
 ```plain
 bundle exec exe/promptcraft \
     --conversation examples/maths/start/many_limericks.yml \
-    --prompt "I am excellent at limericks. I always start each line
-with the letter E. This is very important. Only return the limerick without any other comments."
+    --prompt "I am excellent at limericks. I always start each line with the letter E. This is very important. Only return the limerick without any other comments."
 ```
 
 ## Development
@@ -223,3 +252,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the Promptcraft project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/promptcraft/blob/develop/CODE_OF_CONDUCT.md).
+

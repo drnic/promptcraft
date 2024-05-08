@@ -25,7 +25,7 @@ class Promptcraft::Command::RechatConversationCommand
     end
 
     # if last message is from user, then ask the LLM to generate a response
-    if @updated_conversation.messages.last[:role] == "user"
+    unless @updated_conversation.messages.last&.dig(:role) == "assistant"
       messages = @updated_conversation.to_messages
       response_message = Promptcraft::Command::LlmChatCommand.new(messages: messages, llm: @llm).execute
       @updated_conversation.messages << response_message
