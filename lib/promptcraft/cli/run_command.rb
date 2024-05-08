@@ -54,7 +54,6 @@ class Promptcraft::Cli::RunCommand
     # short "-p"
     long "--provider provider_name"
     desc "Provider name to use for chat completion"
-    default "groq"
   end
 
   def run
@@ -63,10 +62,18 @@ class Promptcraft::Cli::RunCommand
     elsif params.errors.any?
       puts params.errors.summary
     else
-      llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
-
       conversation = Promptcraft::Conversation.load_from_file(params[:conversation])
-      conversation.llm = llm
+
+      if params[:provider]
+        llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
+        conversation.llm = llm
+      elsif conversation.llm
+        llm = conversation.llm
+      else
+        params[:provider] = "groq"
+        llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
+        conversation.llm = llm
+      end
 
       system_prompt = conversation.system_prompt
       system_prompt = File.read(params[:prompt]) if params[:prompt]

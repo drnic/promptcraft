@@ -20,7 +20,8 @@ messages:
 # Let's replay the conversation with a new system prompt:
 $ bundle exec exe/promptcraft \
     --conversation examples/maths/start/already_answered.yml \
-    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
+    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.") \
+    --provider groq
 ---
 system_prompt: I'm terrible at maths. If I'm asked a maths question, I reply with
   a question.
@@ -44,7 +45,8 @@ cd promptcraft
 bin/setup
 bundle exec exe/promptcraft \
     --conversation examples/maths/start/already_answered.yml \
-    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.")
+    --prompt <(echo "I'm terrible at maths. If I'm asked a maths question, I reply with a question.") \
+    --provider groq
 ```
 
 It defaults to `--provider groq --model llama3-70b-8192` and assumes you have `$GROQ_API_KEY` set in your environment.
@@ -52,6 +54,25 @@ It defaults to `--provider groq --model llama3-70b-8192` and assumes you have `$
 You can also use OpenAI with `--provider openai`, which defaults to `--model gpt-3.5-turbo`. It assumes you have `$OPENAI_API_KEY` set in your environment.
 
 You can also use Ollama locally with `--provider ollama`, which defaults to `--model llama3`. It assumes your Ollama app is running on the default port.
+
+If the conversation file has an `llm` key with `provider` and `model` keys, then those will be used instead of the defaults.
+
+```sh
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/already_answered_gpt4.yml \
+    --prompt <(echo "I always reply with a question.")
+
+---
+system_prompt: I always reply with a question.
+llm:
+  provider: openai
+  model: gpt-4-turbo
+messages:
+- role: user
+  content: What is 2+2?
+- role: assistant
+  content: What do you think the answer is?
+```
 
 ## Development
 
