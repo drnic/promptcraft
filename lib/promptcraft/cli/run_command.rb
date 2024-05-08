@@ -75,8 +75,18 @@ class Promptcraft::Cli::RunCommand
         conversation.llm = llm
       end
 
-      system_prompt = conversation.system_prompt
-      system_prompt = File.read(params[:prompt]) if params[:prompt]
+      system_prompt =
+        if (prompt = params[:prompt])
+          # if prompt is a file, load it; else set the prompt to the value
+          if File.exist?(prompt)
+            File.read(prompt)
+          else
+            prompt
+          end
+        else
+          conversation.system_prompt
+        end
+      warn "No system prompt provided." unless system_prompt
 
       cmd = Promptcraft::Command::RechatConversationCommand.new(system_prompt: system_prompt, conversation: conversation, llm: llm)
       cmd.execute
