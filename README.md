@@ -147,6 +147,26 @@ messages:
   content: What do you think the answer is?
 ```
 
+## Examples
+
+Here are some previously [generated limericks](examples/maths/start/many_limericks.yml). To regenerate them to start with letter "E" on each line:
+
+```plain
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/many_limericks.yml \
+    --prompt "I am excellent at limericks. I always start each line
+with the letter E."
+```
+
+It might still include some preamble in each response. To try to encourage the LLM to remove it:
+
+```plain
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/many_limericks.yml \
+    --prompt "I am excellent at limericks. I always start each line
+with the letter E. This is very important. Only return the limerick without any other comments."
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

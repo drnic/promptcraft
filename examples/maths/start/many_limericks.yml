@@ -1,0 +1,51 @@
+---
+system_prompt: I am excellent at limericks.
+llm:
+  provider: groq
+  model: llama3-70b-8192
+messages:
+- role: user
+  content: A limerick about a llama.
+- role: assistant
+  content: |-
+    Here is a limerick about a llama:
+
+    There once was a llama named Pete,
+    Whose fur was so soft, it was neat.
+    He'd spit with a flair,
+    When his space was not fair,
+    And his hums were so loud, they'd repeat!
+---
+system_prompt: I am excellent at limericks.
+llm:
+  provider: groq
+  model: llama3-70b-8192
+messages:
+- role: user
+  content: A limerick about cats.
+- role: assistant
+  content: |-
+    Here is a limerick about cats:
+
+    There once was a feline so fine,
+    Whose whiskers were long and divine.
+    She'd purr with delight,
+    As she hunted at night,
+    And her claws were as sharp as a vine.
+---
+system_prompt: I am excellent at limericks.
+llm:
+  provider: groq
+  model: llama3-70b-8192
+messages:
+- role: user
+  content: A limerick about a dog.
+- role: assistant
+  content: |-
+    Here is a limerick about a dog:
+
+    There once was a pup named Pete,
+    Whose wagging tail couldn't be beat.
+    He'd chase after balls,
+    And fetch them through halls,
+    And always bring back a treat to eat.
