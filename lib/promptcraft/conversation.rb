@@ -16,12 +16,20 @@ class Promptcraft::Conversation
 
   class << self
     def load_from_file(filename)
-      data = YAML.load_file(filename, symbolize_names: true)
-      convo = new(system_prompt: data[:system_prompt], messages: data[:messages])
-      if (llm = data[:llm])
-        convo.llm = Promptcraft::Llm.from_h(llm)
+      conversations = []
+      File.open(filename, "r") do |file|
+        YAML.parse_stream(file) do |doc|
+          doc = deep_symbolize_keys(doc.to_ruby)
+          system_prompt = doc[:system_prompt]
+          messages = doc[:messages]
+          convo = new(system_prompt: system_prompt, messages: messages)
+          if (llm = doc[:llm])
+            convo.llm = Promptcraft::Llm.from_h(llm)
+          end
+          conversations << convo
+        end
       end
-      convo
+      conversations
     end
 
     # Class method to create a Conversation from an array of messages
@@ -33,6 +41,19 @@ class Promptcraft::Conversation
       system_prompt = messages.first[:content]
       remaining_messages = messages[1..]  # all messages after the first
       new(system_prompt:, messages: remaining_messages)
+    end
+
+    def deep_symbolize_keys(value)
+      case value
+      when Hash
+        value.each_with_object({}) do |(key, v), result|
+          result[key.to_sym] = deep_symbolize_keys(v)  # Convert keys to symbols and recursively handle values
+        end
+      when Array
+        value.map { |v| deep_symbolize_keys(v) }  # Apply symbolization to each element in the array
+      else
+        value  # Return the value as is if it is neither a hash nor an array
+      end
     end
   end
 

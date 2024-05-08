@@ -25,7 +25,7 @@ class Promptcraft::Cli::RunCommand
   end
 
   option :conversation do
-    required
+    arity one_or_more
     short "-c"
     long "--conversation filename"
     desc "Filename of conversation"
@@ -62,35 +62,41 @@ class Promptcraft::Cli::RunCommand
     elsif params.errors.any?
       puts params.errors.summary
     else
-      conversation = Promptcraft::Conversation.load_from_file(params[:conversation])
-
-      if params[:provider]
-        llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
-        conversation.llm = llm
-      elsif conversation.llm
-        llm = conversation.llm
-      else
-        params[:provider] = "groq"
-        llm = Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
-        conversation.llm = llm
+      conversations = params[:conversation].each_with_object([]) do |filename, convos|
+        Promptcraft::Conversation.load_from_file(filename)
+        convos.push(*Promptcraft::Conversation.load_from_file(filename))
       end
 
-      system_prompt =
-        if (prompt = params[:prompt])
-          # if prompt is a file, load it; else set the prompt to the value
-          if File.exist?(prompt)
-            File.read(prompt)
-          else
-            prompt
-          end
+      if (prompt = params[:prompt])
+        # if prompt is a file, load it; else set the prompt to the value
+        new_system_prompt = if File.exist?(prompt)
+          File.read(prompt)
         else
-          conversation.system_prompt
+          prompt
         end
-      warn "No system prompt provided." unless system_prompt
+      end
 
-      cmd = Promptcraft::Command::RechatConversationCommand.new(system_prompt: system_prompt, conversation: conversation, llm: llm)
-      cmd.execute
-      puts cmd.updated_conversation.to_yaml
+      # TODO: Rechat loop could be threaded to run many rechat conversations at once
+      updated_conversations = conversations.map do |conversation|
+        llm = if params[:provider]
+          Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
+        elsif conversation.llm
+          conversation.llm
+        else
+          Promptcraft::Llm.new
+        end
+
+        system_prompt = new_system_prompt || conversation.system_prompt
+
+        cmd = Promptcraft::Command::RechatConversationCommand.new(system_prompt:, conversation:, llm:)
+        cmd.execute
+        cmd.updated_conversation
+      end
+
+      # Output. Currently we just output each conversation to the console as YAML
+      updated_conversations.each do |conversation|
+        puts conversation.to_yaml
+      end
     end
   end
 end
