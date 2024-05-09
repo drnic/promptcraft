@@ -200,6 +200,43 @@ messages:
     Let me know, and I'll provide you with a problem to solve!
 ```
 
+### Providing conversations to rechat
+
+The primary point of `promptcraft` is to replay conversations with a new system prompt. So we need to pass them in. We have a few ways:
+
+* Pass one or more conversation files using `--conversation` or `-c` option.
+* Each conversation file can contain one or more YAML documents, each separated by `---`.
+* Pass in a stream of YAML documents via STDIN.
+* JSON is valid YAML, if that's ever useful to you.
+
+An example of the `--conversation` option:
+
+```plain
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/basic.yml
+```
+
+You can also pipe a stream of conversation YAML into `promptcraft` via STDIN
+
+```plain
+echo "---\nsystem_prompt: I like to solve maths problems.\nmessages:\n- role: \"user\"\n  content: \"What is 2+2?\"" | bundle exec exe/promptcraft
+```
+
+JSON is valid YAML, so you can also use JSON:
+
+```plain
+echo "{\"system_prompt\": \"I like to solve maths problems.\", \"messages\": [{\"role\": \"user\", \"content\": \"What is 2+2?\"}]}" | bundle exec exe/promptcraft
+```
+
+Or pipe one or more files into `promptcraft`:
+
+```plain
+( cat examples/maths/start/basic.yml ; cat examples/maths/start/already_answered.yml ) | bundle exec exe/promptcraft
+```
+
+As long as the input is a stream of YAML documents (separated by `---`), it will be processed.
+
+
 ### Missing assistant reply
 
 If you create a conversation and the last message is from the user, then the assistant's reply is missing. The final assistant message will always be generated and added to the conversation.
@@ -236,26 +273,6 @@ messages:
 - role: assistant
   content: That's an easy one! The answer is... 4!
 ```
-
-You can also pipe a stream of conversation YAML into `promptcraft` via STDIN
-
-```plain
-echo "---\nsystem_prompt: I like to solve maths problems.\nmessages:\n- role: \"user\"\n  content: \"What is 2+2?\"" | bundle exec exe/promptcraft
-```
-
-JSON is valid YAML, so you can also use JSON:
-
-```plain
-echo "{\"system_prompt\": \"I like to solve maths problems.\", \"messages\": [{\"role\": \"user\", \"content\": \"What is 2+2?\"}]}" | bundle exec exe/promptcraft
-```
-
-Or pipe one or more files into `promptcraft`:
-
-```plain
-( cat examples/maths/start/basic.yml ; cat examples/maths/start/already_answered.yml ) | bundle exec exe/promptcraft
-```
-
-As long as the input is a stream of YAML documents (separated by `---`), it will be processed.
 
 ### Limericks
 
