@@ -1,5 +1,6 @@
-require "tty-option"
+require "io/wait"
 require "langchain"
+require "tty-option"
 
 # Pick an LLM provider + model:
 #   promptcraft --provider groq
@@ -20,10 +21,10 @@ class Promptcraft::Cli::RunCommand
   end
 
   option :conversation do
-    arity one_or_more
+    arity zero_or_more
     short "-c"
     long "--conversation filename"
-    desc "Filename of conversation"
+    desc "Filename of conversation (or use STDIN)"
   end
 
   option :prompt do
@@ -56,15 +57,24 @@ class Promptcraft::Cli::RunCommand
     default "yaml"
   end
 
-  def run
+  def run(stdin: nil)
     if params[:help]
       print help
     elsif params.errors.any?
       puts params.errors.summary
     else
-      conversations = params[:conversation].each_with_object([]) do |filename, convos|
+      conversations = (params[:conversation] || []).each_with_object([]) do |filename, convos|
         Promptcraft::Conversation.load_from_file(filename)
         convos.push(*Promptcraft::Conversation.load_from_file(filename))
+      end
+
+      # if STDIN piped into the command, read stream of YAML conversations from STDIN
+      if stdin&.ready?
+        conversations.push(*Promptcraft::Conversation.load_from_io(stdin))
+      end
+
+      if conversations.empty?
+        conversations << Promptcraft::Conversation.new(system_prompt: "You are helpful. If you're first, then ask a question. You like brevity.")
       end
 
       if (prompt = params[:prompt])

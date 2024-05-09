@@ -1,0 +1,18 @@
+---
+system_prompt: |-
+  I like to solve maths problems.
+
+messages:
+- role: "user"
+  content: "What is 2+2?"
+- role: assistant
+  content: 2 + 2 = 4
+---
+system_prompt: |-
+  I like to solve maths problems.
+
+messages:
+- role: "user"
+  content: "What is 6 divided by 2?"
+- role: assistant
+  content: 6 / 2 = 3

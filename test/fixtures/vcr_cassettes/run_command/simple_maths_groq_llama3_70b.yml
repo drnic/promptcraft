@@ -1,0 +1,143 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.groq.com/openai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"system","content":"I like to solve maths problems."},{"role":"user","content":"What
+        is 2+2?"}],"model":"llama3-70b-8192","n":1,"temperature":0.0}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <GROQ_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 09 May 2024 08:10:31 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - private, max-age=0, no-store, no-cache, must-revalidate
+      Vary:
+      - Origin
+      X-Ratelimit-Limit-Requests:
+      - '14400'
+      X-Ratelimit-Limit-Tokens:
+      - '6000'
+      X-Ratelimit-Remaining-Requests:
+      - '14399'
+      X-Ratelimit-Remaining-Tokens:
+      - '5980'
+      X-Ratelimit-Reset-Requests:
+      - 6s
+      X-Ratelimit-Reset-Tokens:
+      - 200ms
+      X-Request-Id:
+      - req_01hxe6es1hf12r57c4atwewgmw
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=RpQ8tYfDq7cxydasbYm89fhr_WUSYq9IPoPcvvRAVm0-1715242231-1.0.1.1-fMRYEDtUFCmTzcZgvcHq0tNIwDZp_Fg5ZKdpGs68kf2ZrY0kIuPVyZqQ6PgH.BZ9s3KMPlrDuZMepwr0vmeWjA;
+        path=/; expires=Thu, 09-May-24 08:40:31 GMT; domain=.groq.com; HttpOnly; Secure;
+        SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 881036a62cc6dfab-SYD
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-a89bbfd7-178b-4f93-817d-c973cd403e36","object":"chat.completion","created":1715242230,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        an easy one! The answer is... 4!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"prompt_time":0.013,"completion_tokens":13,"completion_time":0.042,"total_tokens":42,"total_time":0.055},"system_fingerprint":"fp_87cbfbbc4d","x_groq":{"id":"req_01hxe6es1hf12r57c4atwewgmw"}}
+
+        '
+  recorded_at: Thu, 09 May 2024 08:10:30 GMT
+- request:
+    method: post
+    uri: https://api.groq.com/openai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"system","content":"I like to solve maths problems."},{"role":"user","content":"What
+        is 6 divided by 2?"}],"model":"llama3-70b-8192","n":1,"temperature":0.0}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <GROQ_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 09 May 2024 08:10:32 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - private, max-age=0, no-store, no-cache, must-revalidate
+      Vary:
+      - Origin
+      X-Ratelimit-Limit-Requests:
+      - '14400'
+      X-Ratelimit-Limit-Tokens:
+      - '6000'
+      X-Ratelimit-Remaining-Requests:
+      - '14398'
+      X-Ratelimit-Remaining-Tokens:
+      - '5978'
+      X-Ratelimit-Reset-Requests:
+      - 11.447999999s
+      X-Ratelimit-Reset-Tokens:
+      - 220ms
+      X-Request-Id:
+      - req_01hxe6esgre8msptkzhrnd9cee
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=Y7UHcTGZjZH_O16dS11rDqzMwPheD4eszpJlM3o3ekY-1715242232-1.0.1.1-ErGt8U8Rg_Vjmmu49GjQydZ_06JSZRs5CtvZeBCKAx9hPbMfp0cql1vdK4IgwT4ihm9SZv0gPfzQKSzf6g7g3A;
+        path=/; expires=Thu, 09-May-24 08:40:32 GMT; domain=.groq.com; HttpOnly; Secure;
+        SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 881036a93bf8a88f-SYD
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-1f56aaeb-43e7-424c-b57d-4206aa5e70f6","object":"chat.completion","created":1715242231,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"6
+        divided by 2 is 3."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_time":0.025,"completion_tokens":9,"completion_time":0.028,"total_tokens":40,"total_time":0.053000000000000005},"system_fingerprint":"fp_abd29e8833","x_groq":{"id":"req_01hxe6esgre8msptkzhrnd9cee"}}
+
+        '
+  recorded_at: Thu, 09 May 2024 08:10:31 GMT
+recorded_with: VCR 6.2.0

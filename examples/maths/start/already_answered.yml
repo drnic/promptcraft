@@ -1,5 +1,5 @@
-system_prompt: |-
-  I like to solve maths problems.
+---
+system_prompt: I like to solve maths problems.
 
 messages:
 - role: "user"

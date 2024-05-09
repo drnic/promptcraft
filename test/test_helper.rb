@@ -4,6 +4,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "promptcraft"
 
 require "minitest/autorun"
+require "minitest/mock"
 require "vcr"
 require "webmock/minitest"
 

@@ -1,9 +1,6 @@
----
 system_prompt: |-
   I like to solve maths problems.
-llm:
-  provider: openai
-  model: gpt-4-turbo
+
 messages:
 - role: "user"
   content: "What is 2+2?"

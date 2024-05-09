@@ -149,6 +149,94 @@ messages:
 
 ## Examples
 
+The following example commands assume you have `$GROQ_API_KEY` and will use Groq and the `llama3-70b-8192` model as the default provider and model. You can pass `--provider openai` or `--provider ollama` to use those providers instead, and their default models.
+
+### Getting started
+
+Run `promptcraft` with no arguments to get a default prompt and an initial assistant message.
+
+```plain
+bundle exec exe/promptcraft
+```
+
+The output might be:
+
+```yaml
+---
+system_prompt: You are helpful. If you're first, then ask a question. You like brevity.
+messages:
+- role: assistant
+  content: What do you need help with?
+```
+
+Provide a different provider, such as `openai` (which assumes you have `$OPENAI_API_KEY` set in your environment).
+
+```plain
+bundle exec exe/promptcraft --provider openai
+```
+
+Or you could provide your own system prompt, and it will generate an initial assistant message.
+
+```plaim
+bundle exec exe/promptcraft --prompt "I like to solve maths problems."
+```
+
+The output might be:
+
+```yaml
+---
+system_prompt: I like to solve maths problems.
+messages:
+- role: assistant
+  content: |-
+    A math enthusiast! I'd be happy to provide you with some math problems to solve. What level of math are you interested in? Do you want:
+
+    1. Basic algebra (e.g., linear equations, quadratic equations)
+    2. Geometry (e.g., points, lines, triangles, circles)
+    3. Calculus (e.g., limits, derivatives, integrals)
+    4. Number theory (e.g., prime numbers, modular arithmetic)
+    5. Something else (please specify)
+
+    Let me know, and I'll provide you with a problem to solve!
+```
+
+### Providing conversations to rechat
+
+The primary point of `promptcraft` is to replay conversations with a new system prompt. So we need to pass them in. We have a few ways:
+
+* Pass one or more conversation files using `--conversation` or `-c` option.
+* Each conversation file can contain one or more YAML documents, each separated by `---`.
+* Pass in a stream of YAML documents via STDIN.
+* JSON is valid YAML, if that's ever useful to you.
+
+An example of the `--conversation` option:
+
+```plain
+bundle exec exe/promptcraft \
+    --conversation examples/maths/start/basic.yml
+```
+
+You can also pipe a stream of conversation YAML into `promptcraft` via STDIN
+
+```plain
+echo "---\nsystem_prompt: I like to solve maths problems.\nmessages:\n- role: \"user\"\n  content: \"What is 2+2?\"" | bundle exec exe/promptcraft
+```
+
+JSON is valid YAML, so you can also use JSON:
+
+```plain
+echo "{\"system_prompt\": \"I like to solve maths problems.\", \"messages\": [{\"role\": \"user\", \"content\": \"What is 2+2?\"}]}" | bundle exec exe/promptcraft
+```
+
+Or pipe one or more files into `promptcraft`:
+
+```plain
+( cat examples/maths/start/basic.yml ; cat examples/maths/start/already_answered.yml ) | bundle exec exe/promptcraft
+```
+
+As long as the input is a stream of YAML documents (separated by `---`), it will be processed.
+
+
 ### Missing assistant reply
 
 If you create a conversation and the last message is from the user, then the assistant's reply is missing. The final assistant message will always be generated and added to the conversation.
@@ -184,37 +272,6 @@ messages:
   content: What is 2+2?
 - role: assistant
   content: That's an easy one! The answer is... 4!
-```
-
-### Only a system message
-
-Similarly, if the [conversation only has a system prompt](examples/maths/start/system_only.yml) then an initial assistant message will be generated.
-
-```plain
-bundle exec exe/promptcraft \
-    --conversation examples/maths/start/system_only.yml
-```
-
-The output might be:
-
-```yaml
----
-system_prompt: I like to solve maths problems.
-llm:
-  provider: groq
-  model: llama3-70b-8192
-messages:
-- role: assistant
-  content: |-
-    A math enthusiast! I'd be happy to provide you with some math problems to solve. What level of math are you interested in? Do you want:
-
-    1. Basic algebra (e.g., linear equations, quadratic equations)
-    2. Geometry (e.g., points, lines, triangles, circles)
-    3. Calculus (e.g., limits, derivatives, integrals)
-    4. Number theory (e.g., prime numbers, modular arithmetic)
-    5. Something else (please specify)
-
-    Let me know, and I'll provide you with a problem to solve!
 ```
 
 ### Limericks
