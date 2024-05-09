@@ -249,6 +249,14 @@ JSON is valid YAML, so you can also use JSON:
 echo "{\"system_prompt\": \"I like to solve maths problems.\", \"messages\": [{\"role\": \"user\", \"content\": \"What is 2+2?\"}]}" | bundle exec exe/promptcraft
 ```
 
+Or pipe one or more files into `promptcraft`:
+
+```plain
+( cat examples/maths/start/basic.yml ; cat examples/maths/start/already_answered.yml ) | bundle exec exe/promptcraft
+```
+
+As long as the input is a stream of YAML documents (separated by `---`), it will be processed.
+
 ### Limericks
 
 Here are some previously [generated limericks](examples/maths/start/many_limericks.yml). To regenerate them to start with letter "E" on each line:
