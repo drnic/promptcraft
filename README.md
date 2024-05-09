@@ -236,6 +236,17 @@ Or pipe one or more files into `promptcraft`:
 
 As long as the input is a stream of YAML documents (separated by `---`), it will be processed.
 
+### Creating conversation files
+
+You could manually create these YAML files. Sure.
+
+You could get the scaffold for the file by running `promptcraft` with no arguments, and then copy/paste the output into a new file.
+
+Another idea is to use the Groq or ChatGPT playgrounds. Have a conversation with the AI, and then copy a screenshot into ChatGPT and ask it to convert it to YAML:
+
+![chatgpt-vision-to-yaml](docs/images/chatgpt-vision-to-yaml.png)
+
+That's cool.
 
 ### Missing assistant reply
 
