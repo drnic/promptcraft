@@ -15,6 +15,21 @@ class Promptcraft::Conversation
   end
 
   class << self
+    def load_from_io(io = $stdin)
+      conversations = []
+      YAML.load_stream(io) do |doc|
+        doc = deep_symbolize_keys(doc)
+        system_prompt = doc[:system_prompt]
+        messages = doc[:messages] || []
+        convo = new(system_prompt: system_prompt, messages: messages)
+        if (llm = doc[:llm])
+          convo.llm = Promptcraft::Llm.from_h(llm)
+        end
+        conversations << convo
+      end
+      conversations
+    end
+
     def load_from_file(filename)
       conversations = []
       File.open(filename, "r") do |file|

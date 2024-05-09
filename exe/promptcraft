@@ -3,4 +3,5 @@
 require "promptcraft"
 
 cmd = Promptcraft::Cli::RunCommand.new
-cmd.parse.run
+
+cmd.parse.run(stdin: $stdin)

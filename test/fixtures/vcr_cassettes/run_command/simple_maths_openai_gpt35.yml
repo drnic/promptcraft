@@ -1,0 +1,97 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"system","content":"I like to solve maths problems."},{"role":"user","content":"What
+        is 2+2?"}],"model":"gpt-3.5-turbo","n":1,"temperature":0.0}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 09 May 2024 08:55:20 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Organization:
+      - user-ujpyqwcjd0dls5k3amdh1vei
+      Openai-Processing-Ms:
+      - '420'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '160000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '159971'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 10ms
+      X-Request-Id:
+      - req_fe5b64106910eaf740c97f1f29a27f4d
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=pSodrRcIms1ihe51Nf3zG_1lDkv8lkptWf8ZnZ.gxGI-1715244920-1.0.1.1-bBLUu9Wp8b5r6vQSV.qHudaJFCyw1T6rhCf3D73K.ZrOVhPRc4V.dzftT8AwPfb6x6kHRCzp6ClC1noZ1MYapg;
+        path=/; expires=Thu, 09-May-24 09:25:20 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=TQq_S5ght1n83.oMIdTUCJpFleturZp0OCQhUXflZ0Y-1715244920628-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8810784d3de6a87c-SYD
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-9MtqaLCo0d98PeLs3TKnAryBfJ3Nm",
+          "object": "chat.completion",
+          "created": 1715244920,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "2 + 2 equals 4."
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 25,
+            "completion_tokens": 8,
+            "total_tokens": 33
+          },
+          "system_fingerprint": null
+        }
+  recorded_at: Thu, 09 May 2024 08:55:20 GMT
+recorded_with: VCR 6.2.0
