@@ -1,6 +1,6 @@
 # Promptcraft
 
-Try out new system prompts on your existing conversations. Over and over until you're happy.
+Try out new system prompts on your existing AI conversations. Over and over until you're happy.
 
 The `promptcraft` CLI let's you replay a conversation between a user and an AI assistant, but with a new system prompt.
 

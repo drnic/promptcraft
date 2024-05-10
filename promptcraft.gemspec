@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Dr Nic Williams"]
   spec.email = ["drnicwilliams@gmail.com"]
 
-  spec.summary = "Refine and test LLM system prompts"
-  spec.description = "Promptcraft is an innovative tool designed to optimize and test system prompts for AI-powered conversations. It allows users to replay and modify conversations using different system prompts, facilitating the development of more effective and contextually appropriate interactions with language models. Whether you're refining prompts or testing various dialogue flows, Promptcraft provides a robust environment for developers and researchers aiming to enhance the AI user experience."
+  spec.summary = "Try out new system prompts on your existing AI conversations. Over and over until you're happy."
+  spec.description = "The promptcraft CLI let's you replay a conversation between a user and an AI assistant, but with a new system prompt."
   spec.homepage = "https://github.com/drnic/promptcraft"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.3.0"
