@@ -8,7 +8,7 @@ module Promptcraft::Cli
 
     def test_help
       @cli.parse(%w[--help])
-      assert_output(/Usage:/) { @cli.run }
+      assert_output("", /Usage:/) { @cli.run }
     end
 
     def test_conversation_stream
