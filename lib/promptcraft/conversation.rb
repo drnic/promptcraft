@@ -18,14 +18,7 @@ class Promptcraft::Conversation
     def load_from_io(io = $stdin)
       conversations = []
       YAML.load_stream(io) do |doc|
-        doc = deep_symbolize_keys(doc)
-        system_prompt = doc[:system_prompt]
-        messages = doc[:messages] || []
-        convo = new(system_prompt: system_prompt, messages: messages)
-        if (llm = doc[:llm])
-          convo.llm = Promptcraft::Llm.from_h(llm)
-        end
-        conversations << convo
+        conversations << build_from(doc)
       end
       conversations
     end
@@ -34,17 +27,21 @@ class Promptcraft::Conversation
       conversations = []
       File.open(filename, "r") do |file|
         YAML.parse_stream(file) do |doc|
-          doc = deep_symbolize_keys(doc.to_ruby)
-          system_prompt = doc[:system_prompt]
-          messages = doc[:messages] || []
-          convo = new(system_prompt: system_prompt, messages: messages)
-          if (llm = doc[:llm])
-            convo.llm = Promptcraft::Llm.from_h(llm)
-          end
-          conversations << convo
+          conversations << build_from(doc.to_ruby)
         end
       end
       conversations
+    end
+
+    def build_from(doc)
+      doc = deep_symbolize_keys(doc)
+      system_prompt = doc[:system_prompt]
+      messages = doc[:messages] || []
+      convo = new(system_prompt: system_prompt, messages: messages)
+      if (llm = doc[:llm])
+        convo.llm = Promptcraft::Llm.from_h(llm)
+      end
+      convo
     end
 
     # Class method to create a Conversation from an array of messages
