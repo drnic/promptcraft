@@ -67,13 +67,17 @@ class Promptcraft::Cli::RunCommand
 
   def run(stdin: nil)
     if params[:help]
-      print help
+      warn help
     elsif params.errors.any?
-      puts params.errors.summary
+      warn params.errors.summary
     else
       conversations = (params[:conversation] || []).each_with_object([]) do |filename, convos|
-        Promptcraft::Conversation.load_from_file(filename)
-        convos.push(*Promptcraft::Conversation.load_from_file(filename))
+        # check if --conversation=filename is an actual file, else store it in StringIO and pass to load_from_io
+        if File.exist?(filename)
+          convos.push(*Promptcraft::Conversation.load_from_file(filename))
+        else
+          convos.push(*Promptcraft::Conversation.load_from_io(StringIO.new(filename)))
+        end
       end
 
       # if STDIN piped into the command, read stream of YAML conversations from STDIN
