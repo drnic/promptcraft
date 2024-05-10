@@ -1,6 +1,6 @@
 # Promptcraft
 
-Try out a new system prompt on your conversations. Over and over until you're happy.
+Try out new system prompts on your existing conversations. Over and over until you're happy.
 
 The `promptcraft` CLI let's you replay a conversation between a user and an AI assistant, but with a new system prompt.
 
@@ -20,8 +20,8 @@ Let's replay this single conversation with a new system prompt:
 
 ```plain
 bundle exec exe/promptcraft \
-    --conversation examples/maths/start/already_answered.yml \
-    --prompt "I'm terrible at maths. If I'm asked a maths question, I reply with a question."
+    --prompt "I'm terrible at maths. If I'm asked a maths question, I reply with a question." \
+    --conversation examples/maths/start/already_answered.yml
 ```
 
 The output is the new conversation containing the same user messages, plus the new system prompt and new responses by the AI assistant:
@@ -113,6 +113,84 @@ bundle exec be exe/promptcraft \
     --conversation examples/maths/start/already_answered_gpt4.yml \
     --prompt "Answer like a pirate. A maths pirate."
 ```
+
+When you're getting started, you don't even need to know the conversation file format. Just pass in a series of user messages separated by `---` and a system prompt:
+
+```plain
+echo "---\nWhat is 2+2?\n---\nWhat is 6 divided by 2?" | \
+  bundle exec exe/promptcraft --prompt "I solve maths using pizza metaphors."
+```
+
+The output will be our conversation YAML format, with the system prompt, the incoming user messages as separate conversations, and the assistant replies within each conversation:
+
+```yaml
+---
+system_prompt: I solve maths using pizza metaphors.
+llm:
+  provider: groq
+  model: llama3-70b-8192
+messages:
+- role: user
+  content: What is 2+2?
+- role: assistant
+  content: |-
+    You want to know the answer to 2+2? Well, let me slice it up for you!
+
+    Imagine you have 2 slices of pizza, and your friend has 2 slices of pizza. If you combine your slices, how many slices do you have now?
+
+    That's right! You have a total of 4 slices of pizza! So, 2+2 is equal to... (drumroll please)... 4!
+---
+system_prompt: I solve maths using pizza metaphors.
+llm:
+  provider: groq
+  model: llama3-70b-8192
+messages:
+- role: user
+  content: What is 6 divided by 2?
+- role: assistant
+  content: |-
+    Think of it like this: Imagine you have 6 slices of pizza and you want to share them equally among 2 of your friends. How many slices will each friend get?
+
+    That's right! Each friend will get 3 slices of pizza! So, 6 divided by 2 is... 3!
+```
+
+You'll notice, the LLM used (which defaults to Groq's `llama3-70b-8192` because its fast and cheap) is included in the output. See below for selecting a different LLM, such as `--provider openai --model chatgpt-4-turbo` or `--provider ollama --model llama3`.
+
+Of course, you could pass each plain text user message using the `--conversation` argument too:
+
+```plain
+bundle exec exe/promptcraft \
+    --conversation "What is 2+2?"
+    --conversation "What is 6 divided by 2?" \
+    --prompt "I solve maths using pizza metaphors."
+```
+
+Why does it output YAML? (or JSON if you pass `--json` flag) So that you can save it to a file; and then replay (or rechat) this new set of conversations in a minute with a new system prompt.
+
+```plain
+bundle exec exe/promptcraft \
+    --conversation "What is 2+2?" \
+    --conversation "What is 6 divided by 2?" \
+    --prompt "I am happy person". \
+  > tmp/maths-as-happy-person.yml
+
+bundle exec exe/promptcraft \
+    --conversation tmp/maths-as-happy-person.yml \
+    --prompt "I solve maths using pizza metaphors." \
+> tmp/maths-with-pizza.yml
+
+# perhaps put big prompts in files
+echo "I am an excellent maths tutor.
+
+When I'm asked a maths question, I will first
+ask a question in return to help the student." > tmp/prompt-maths-tutor.txt
+
+bundle exec exe/promptcraft \
+    --conversation tmp/maths-with-pizza.yml \
+    --prompt tmp/prompt-maths-tutor.txt
+```
+
+Now you have the output conversations in separate files, each with the system prompt and LLM used to produce the assistant replies.
 
 ## Installation
 

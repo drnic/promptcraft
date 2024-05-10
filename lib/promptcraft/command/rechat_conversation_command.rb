@@ -1,4 +1,6 @@
 class Promptcraft::Command::RechatConversationCommand
+  include Promptcraft::Helpers
+
   def initialize(system_prompt:, conversation:, llm:)
     @system_prompt = system_prompt
     @conversation = conversation
@@ -14,7 +16,8 @@ class Promptcraft::Command::RechatConversationCommand
     @updated_conversation = Promptcraft::Conversation.new(system_prompt:, llm:)
 
     conversation.messages.each do |message|
-      role = message[:role] || message["role"]
+      message = deep_symbolize_keys(message)
+      role = message[:role]
       if role == "assistant"
         messages = @updated_conversation.to_messages
         response_message = Promptcraft::Command::LlmChatCommand.new(messages: messages, llm: @llm).execute
