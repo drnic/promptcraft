@@ -1,6 +1,9 @@
 require "yaml"
 
 class Promptcraft::Conversation
+  include Promptcraft::Helpers
+  extend Promptcraft::Helpers
+
   attr_accessor :system_prompt, :messages
   attr_accessor :llm
 
@@ -34,7 +37,14 @@ class Promptcraft::Conversation
     end
 
     def build_from(doc)
-      doc = deep_symbolize_keys(doc)
+      if doc.is_a?(Hash)
+        doc = deep_symbolize_keys(doc)
+      elsif doc.is_a?(String)
+        doc = {messages: [{role: "user", content: doc}]}
+      else
+        raise ArgumentError, "Invalid document type: #{doc.class}"
+      end
+
       system_prompt = doc[:system_prompt]
       messages = doc[:messages] || []
       convo = new(system_prompt: system_prompt, messages: messages)
@@ -53,19 +63,6 @@ class Promptcraft::Conversation
       system_prompt = messages.first[:content]
       remaining_messages = messages[1..]  # all messages after the first
       new(system_prompt:, messages: remaining_messages)
-    end
-
-    def deep_symbolize_keys(value)
-      case value
-      when Hash
-        value.each_with_object({}) do |(key, v), result|
-          result[key.to_sym] = deep_symbolize_keys(v)  # Convert keys to symbols and recursively handle values
-        end
-      when Array
-        value.map { |v| deep_symbolize_keys(v) }  # Apply symbolization to each element in the array
-      else
-        value  # Return the value as is if it is neither a hash nor an array
-      end
     end
   end
 
@@ -97,16 +94,5 @@ class Promptcraft::Conversation
 
   def to_messages
     [{role: "system", content: @system_prompt}] + @messages
-  end
-
-  def deep_stringify_keys(value)
-    case value
-    when Hash
-      value.map { |k, v| [k.to_s, deep_stringify_keys(v)] }.to_h
-    when Array
-      value.map { |v| deep_stringify_keys(v) }
-    else
-      value
-    end
   end
 end

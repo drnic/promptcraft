@@ -9,6 +9,8 @@ class Promptcraft::Command::LlmChatCommand
   end
 
   def execute
+    # cleanse messages of missing content, role, etc
+    messages = @messages.reject { |m| m[:content].nil? || m[:content].empty? || m[:role].nil? || m[:role].empty? }
     response = @llm.chat(messages:)
     response_message = response.chat_completions&.dig(0, "message")
     response_message = response_message.transform_keys(&:to_sym) if response_message.is_a?(Hash)

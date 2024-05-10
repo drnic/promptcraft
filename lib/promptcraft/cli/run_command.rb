@@ -57,6 +57,14 @@ class Promptcraft::Cli::RunCommand
     default "yaml"
   end
 
+  # TODO: --debug
+  # * faraday debugging
+  # * Promptcraft::Llm.new(debug: true)
+  flag :debug do
+    long "--debug"
+    desc "Enable debug mode"
+  end
+
   def run(stdin: nil)
     if params[:help]
       print help
