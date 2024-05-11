@@ -23,6 +23,13 @@ class Promptcraft::Llm
         api_key: ENV.fetch("OPENAI_API_KEY"),
         default_options: {chat_completion_model_name: @model}
       )
+    when "openrouter"
+      @model = model || "meta-llama/llama-3-8b-instruct:free"
+      Langchain::LLM::OpenAI.new(
+        api_key: ENV.fetch("OPENROUTER_API_KEY"),
+        llm_options: {uri_base: "https://openrouter.ai/api/"},
+        default_options: {chat_completion_model_name: @model}
+      )
     when "ollama"
       @model = model || "llama3"
       Langchain::LLM::Ollama.new(

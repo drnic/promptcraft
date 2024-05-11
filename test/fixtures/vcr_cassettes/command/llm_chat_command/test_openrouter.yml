@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":"What is 2 + 2?"}],"model":"meta-llama/llama-3-8b-instruct:free","temperature":0.0,"n":1}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer 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
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 11 May 2024 01:07:29 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Authorization, User-Agent, X-Api-Key, X-CSRF-Token, X-Requested-With, Accept,
+        Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version,
+        HTTP-Referer, X-Windowai-Title, X-Openrouter-Title, X-Title, X-Stainless-Lang,
+        X-Stainless-Package-Version, X-Stainless-OS, X-Stainless-Arch, X-Stainless-Runtime,
+        X-Stainless-Runtime-Version
+      Access-Control-Allow-Methods:
+      - GET,OPTIONS,PATCH,DELETE,POST,PUT
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - public, max-age=0, must-revalidate
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Matched-Path:
+      - "/api/v1/chat/completions"
+      X-Vercel-Id:
+      - syd1::fgbf2-1715389648361-1e86601183f7
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 881e45b6194fa949-SYD
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n{\"id\":\"gen-qPok2Hv1czQy0tZATBIGHt9hLyWR\",\"model\":\"meta-llama/llama-3-8b-instruct:free\",\"object\":\"chat.completion\",\"created\":1715389649,\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
+        answer to 2 + 2 is 4.\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":18,\"completion_tokens\":12,\"total_tokens\":30,\"total_cost\":0}}"
+  recorded_at: Sat, 11 May 2024 01:07:31 GMT
+recorded_with: VCR 6.2.0
