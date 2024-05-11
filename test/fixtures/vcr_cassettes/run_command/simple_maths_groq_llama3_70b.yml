@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"system","content":"I like to solve maths problems."},{"role":"user","content":"What
-        is 2+2?"}],"model":"llama3-70b-8192","n":1,"temperature":0.0}'
+        is 2+2?"}],"model":"llama3-70b-8192","temperature":0.0,"n":1}'
     headers:
       Content-Type:
       - application/json
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 09 May 2024 08:10:31 GMT
+      - Sat, 11 May 2024 01:51:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       X-Ratelimit-Reset-Tokens:
       - 200ms
       X-Request-Id:
-      - req_01hxe6es1hf12r57c4atwewgmw
+      - req_01hxjnhj23fxyvt7nzsbbtx3g2
       Via:
       - 1.1 google
       Alt-Svc:
@@ -56,27 +56,27 @@ http_interactions:
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=RpQ8tYfDq7cxydasbYm89fhr_WUSYq9IPoPcvvRAVm0-1715242231-1.0.1.1-fMRYEDtUFCmTzcZgvcHq0tNIwDZp_Fg5ZKdpGs68kf2ZrY0kIuPVyZqQ6PgH.BZ9s3KMPlrDuZMepwr0vmeWjA;
-        path=/; expires=Thu, 09-May-24 08:40:31 GMT; domain=.groq.com; HttpOnly; Secure;
+      - __cf_bm=fG3wRRyoOCSziEVh9w.t4JHfYa2ByB4EKcBtvLg9Dn0-1715392268-1.0.1.1-OyvpeH_VfxayxgYWcB8l.4.4VlIp5.GKq80XGpSyPJCO8O1xuV.Hka28ghHa5pns9_6ZhK6oQhfIySNo4ybJJQ;
+        path=/; expires=Sat, 11-May-24 02:21:08 GMT; domain=.groq.com; HttpOnly; Secure;
         SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 881036a62cc6dfab-SYD
+      - 881e85acbfb65719-SYD
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-a89bbfd7-178b-4f93-817d-c973cd403e36","object":"chat.completion","created":1715242230,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
-        an easy one! The answer is... 4!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"prompt_time":0.013,"completion_tokens":13,"completion_time":0.042,"total_tokens":42,"total_time":0.055},"system_fingerprint":"fp_87cbfbbc4d","x_groq":{"id":"req_01hxe6es1hf12r57c4atwewgmw"}}
+      string: '{"id":"chatcmpl-dc7c4fc6-27f2-40cc-a6a0-ff5c675b7500","object":"chat.completion","created":1715392268,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        an easy one! The answer is... 4!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"prompt_time":0.011,"completion_tokens":13,"completion_time":0.042,"total_tokens":42,"total_time":0.053000000000000005},"system_fingerprint":"fp_c1a4bcec29","x_groq":{"id":"req_01hxjnhj23fxyvt7nzsbbtx3g2"}}
 
         '
-  recorded_at: Thu, 09 May 2024 08:10:30 GMT
+  recorded_at: Sat, 11 May 2024 01:51:08 GMT
 - request:
     method: post
     uri: https://api.groq.com/openai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"system","content":"I like to solve maths problems."},{"role":"user","content":"What
-        is 6 divided by 2?"}],"model":"llama3-70b-8192","n":1,"temperature":0.0}'
+        is 6 divided by 2?"}],"model":"llama3-70b-8192","temperature":0.0,"n":1}'
     headers:
       Content-Type:
       - application/json
@@ -94,7 +94,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 09 May 2024 08:10:32 GMT
+      - Sat, 11 May 2024 01:51:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -114,11 +114,11 @@ http_interactions:
       X-Ratelimit-Remaining-Tokens:
       - '5978'
       X-Ratelimit-Reset-Requests:
-      - 11.447999999s
+      - 11.574s
       X-Ratelimit-Reset-Tokens:
       - 220ms
       X-Request-Id:
-      - req_01hxe6esgre8msptkzhrnd9cee
+      - req_01hxjnhjfgfdk8z2f1vqwgzvhz
       Via:
       - 1.1 google
       Alt-Svc:
@@ -126,18 +126,18 @@ http_interactions:
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=Y7UHcTGZjZH_O16dS11rDqzMwPheD4eszpJlM3o3ekY-1715242232-1.0.1.1-ErGt8U8Rg_Vjmmu49GjQydZ_06JSZRs5CtvZeBCKAx9hPbMfp0cql1vdK4IgwT4ihm9SZv0gPfzQKSzf6g7g3A;
-        path=/; expires=Thu, 09-May-24 08:40:32 GMT; domain=.groq.com; HttpOnly; Secure;
+      - __cf_bm=uK.E.Gk0QT.CCriHzL04gqW79HD_s_yy8s6nF1J4EtQ-1715392268-1.0.1.1-_H4bJTqfwnOzykdTt.vAV6WgaPkwlwatnWECjTqW_9U7OOPOaTmQ0krmNNhPUT_rqYYMaLYjIqbM9k..WvyoEQ;
+        path=/; expires=Sat, 11-May-24 02:21:08 GMT; domain=.groq.com; HttpOnly; Secure;
         SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 881036a93bf8a88f-SYD
+      - 881e85af5e5ea943-SYD
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-1f56aaeb-43e7-424c-b57d-4206aa5e70f6","object":"chat.completion","created":1715242231,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"6
-        divided by 2 is 3."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_time":0.025,"completion_tokens":9,"completion_time":0.028,"total_tokens":40,"total_time":0.053000000000000005},"system_fingerprint":"fp_abd29e8833","x_groq":{"id":"req_01hxe6esgre8msptkzhrnd9cee"}}
+      string: '{"id":"chatcmpl-209092b8-fe90-4397-a2a8-b130b9fcb9a0","object":"chat.completion","created":1715392268,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"6
+        divided by 2 is 3."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"prompt_time":0.014,"completion_tokens":9,"completion_time":0.028,"total_tokens":40,"total_time":0.042},"system_fingerprint":"fp_abd29e8833","x_groq":{"id":"req_01hxjnhjfgfdk8z2f1vqwgzvhz"}}
 
         '
-  recorded_at: Thu, 09 May 2024 08:10:31 GMT
+  recorded_at: Sat, 11 May 2024 01:51:09 GMT
 recorded_with: VCR 6.2.0

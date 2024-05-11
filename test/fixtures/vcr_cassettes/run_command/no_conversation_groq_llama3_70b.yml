@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"system","content":"You are helpful. If you''re
-        first, then ask a question. You like brevity."}],"model":"llama3-70b-8192","n":1,"temperature":0.0}'
+        first, then ask a question. You like brevity."}],"model":"llama3-70b-8192","temperature":0.0,"n":1}'
     headers:
       Content-Type:
       - application/json
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 09 May 2024 09:50:31 GMT
+      - Sat, 11 May 2024 01:51:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,15 +40,15 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '6000'
       X-Ratelimit-Remaining-Requests:
-      - '14399'
+      - '14397'
       X-Ratelimit-Remaining-Tokens:
       - '5977'
       X-Ratelimit-Reset-Requests:
-      - 6s
+      - 16.438999999s
       X-Ratelimit-Reset-Tokens:
       - 230ms
       X-Request-Id:
-      - req_01hxec5wfxe7krs6xqb9whvgxt
+      - req_01hxjnhkzff4pbz27wm6bypf9y
       Via:
       - 1.1 google
       Alt-Svc:
@@ -56,18 +56,18 @@ http_interactions:
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=9VOAF2XIR0OOQG9hrEQNfWcz76KvEeUyX10qQ3t9_PY-1715248231-1.0.1.1-yfvxdjzT4J7.t6VtW7Y40_6pe.jqbrilclvGow1PHDa5hD3kh1UKytp6GuLOmKjmxkdfMyjqTpxorD8JNIaNrQ;
-        path=/; expires=Thu, 09-May-24 10:20:31 GMT; domain=.groq.com; HttpOnly; Secure;
+      - __cf_bm=DoR2B.hfrF3k9LdbZRCgZC7VIkz9eYVmEu4Lx8zI8DI-1715392270-1.0.1.1-8ZaXR.8wakCeEXrvtCBZLxUVO1txEg5a.6qizIlGV5.OZBRIm8nFeHiCIB4prJJmT.npPzY2eDk.9wRzH4UOtg;
+        path=/; expires=Sat, 11-May-24 02:21:10 GMT; domain=.groq.com; HttpOnly; Secure;
         SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 8810c9225d615747-SYD
+      - 881e85b8fcc2aadb-SYD
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"chatcmpl-fb60b16f-61bd-415f-882e-3856085be426","object":"chat.completion","created":1715248231,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"What
-        do you need help with?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":36,"prompt_time":0.106,"completion_tokens":7,"completion_time":0.023,"total_tokens":43,"total_time":0.129},"system_fingerprint":"fp_abd29e8833","x_groq":{"id":"req_01hxec5wfxe7krs6xqb9whvgxt"}}
+      string: '{"id":"chatcmpl-d8e1bbda-047c-4a72-b8fc-43e33c52a8a5","object":"chat.completion","created":1715392270,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"What
+        do you need help with?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":36,"prompt_time":0.016,"completion_tokens":7,"completion_time":0.023,"total_tokens":43,"total_time":0.039},"system_fingerprint":"fp_9625f32860","x_groq":{"id":"req_01hxjnhkzff4pbz27wm6bypf9y"}}
 
         '
-  recorded_at: Thu, 09 May 2024 09:50:31 GMT
+  recorded_at: Sat, 11 May 2024 01:51:10 GMT
 recorded_with: VCR 6.2.0

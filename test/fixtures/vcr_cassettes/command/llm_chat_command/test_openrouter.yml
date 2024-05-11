@@ -10,7 +10,7 @@ http_interactions:
       Content-Type:
       - application/json
       Authorization:
-      - Bearer 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
+      - Bearer <OPENROUTER_API_KEY>
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 11 May 2024 01:07:29 GMT
+      - Sat, 11 May 2024 01:52:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,16 +49,16 @@ http_interactions:
       X-Matched-Path:
       - "/api/v1/chat/completions"
       X-Vercel-Id:
-      - syd1::fgbf2-1715389648361-1e86601183f7
+      - syd1::j9cv2-1715392338732-5dc584b03fcd
       Cf-Cache-Status:
       - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
-      - 881e45b6194fa949-SYD
+      - 881e8765098ba880-SYD
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n{\"id\":\"gen-qPok2Hv1czQy0tZATBIGHt9hLyWR\",\"model\":\"meta-llama/llama-3-8b-instruct:free\",\"object\":\"chat.completion\",\"created\":1715389649,\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
+      string: "\n         \n\n         \n{\"id\":\"gen-DZ7JkeIcZXVSJAH8JTwj5p169Ara\",\"model\":\"meta-llama/llama-3-8b-instruct:free\",\"object\":\"chat.completion\",\"created\":1715392341,\"choices\":[{\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
         answer to 2 + 2 is 4.\"},\"finish_reason\":\"stop\"}],\"usage\":{\"prompt_tokens\":18,\"completion_tokens\":12,\"total_tokens\":30,\"total_cost\":0}}"
-  recorded_at: Sat, 11 May 2024 01:07:31 GMT
+  recorded_at: Sat, 11 May 2024 01:52:21 GMT
 recorded_with: VCR 6.2.0
