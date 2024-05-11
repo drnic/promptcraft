@@ -16,7 +16,6 @@ module Promptcraft::Command
     end
 
     def test_openrouter
-      Langchain.logger.level = :debug
       llm = Promptcraft::Llm.new(provider: "openrouter")
       VCR.use_cassette("command/llm_chat_command/test_openrouter") do
         messages = [{role: "user", content: "What is 2 + 2?"}]
