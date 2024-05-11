@@ -1,7 +1,16 @@
 GIT
-  remote: https://github.com/drnic/langchainrb.git
-  revision: 4f1afb5e9048ac61dab8b35f333b8868ebbc3107
-  branch: ollama-response
+  remote: https://github.com/drnic/ruby-openai.git
+  revision: dd3d0daff18de72aba993c99f9444e34b680d3b7
+  branch: remove-warning-no-org
+  specs:
+    ruby-openai (7.0.1)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
+
+GIT
+  remote: https://github.com/patterns-ai-core/langchainrb.git
+  revision: b8169ddfbd56950e9af817a0a24d5ae44096339e
   specs:
     langchainrb (0.12.0)
       activesupport (>= 7.0.8)
@@ -13,16 +22,6 @@ GIT
       tiktoken_ruby (~> 0.0.8)
       to_bool (~> 2.0.0)
       zeitwerk (~> 2.5)
-
-GIT
-  remote: https://github.com/drnic/ruby-openai.git
-  revision: dd3d0daff18de72aba993c99f9444e34b680d3b7
-  branch: remove-warning-no-org
-  specs:
-    ruby-openai (7.0.1)
-      event_stream_parser (>= 0.3.0, < 2.0.0)
-      faraday (>= 1)
-      faraday-multipart (>= 1)
 
 PATH
   remote: .
