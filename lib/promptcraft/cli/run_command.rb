@@ -58,6 +58,13 @@ class Promptcraft::Cli::RunCommand
     default "yaml"
   end
 
+  option :threads do
+    long "--threads threads"
+    desc "Number of threads to use for concurrent processing"
+    convert :int
+    default 5
+  end
+
   # TODO: --debug
   # * faraday debugging
   # * Promptcraft::Llm.new(debug: true)
@@ -110,32 +117,52 @@ class Promptcraft::Cli::RunCommand
         end
       end
 
-      # TODO: Rechat loop could be threaded to run many rechat conversations at once
+      # Process each conversation in a concurrent thread via a thread pool
+      pool = Concurrent::FixedThreadPool.new(params[:threads])
+      mutex = Mutex.new
+
       updated_conversations = Concurrent::Array.new
       conversations.each do |conversation|
-        llm = if params[:provider]
-          Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
-        elsif conversation.llm
-          conversation.llm
-        else
-          Promptcraft::Llm.new
+        pool.post do
+          # warn "Post processing conversation for #{conversation.messages.inspect}"
+          llm = if params[:provider]
+            Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
+          elsif conversation.llm
+            conversation.llm
+          else
+            Promptcraft::Llm.new
+          end
+
+          system_prompt = new_system_prompt || conversation.system_prompt
+
+          cmd = Promptcraft::Command::RechatConversationCommand.new(system_prompt:, conversation:, llm:)
+          cmd.execute
+          updated_conversations << cmd.updated_conversation
+
+          mutex.synchronize do
+            dump_conversation(cmd.updated_conversation, format: params[:format])
+          end
+        rescue => e
+          mutex.synchronize do
+            warn "Error: #{e.message}"
+            warn "for conversation: #{conversation.inspect}"
+          end
         end
-
-        system_prompt = new_system_prompt || conversation.system_prompt
-
-        cmd = Promptcraft::Command::RechatConversationCommand.new(system_prompt:, conversation:, llm:)
-        cmd.execute
-        updated_conversations << cmd.updated_conversation
       end
+      # tell the pool to shutdown in an orderly fashion, allowing in progress work to complete
+      pool.shutdown
+      # now wait for all work to complete, wait as long as it takes
+      pool.wait_for_termination
+    end
+  end
 
-      # Output. Currently we just output each conversation to the console as YAML
-      updated_conversations.each do |conversation|
-        if params[:format] == "json"
-          puts conversation.to_json
-        else
-          puts conversation.to_yaml
-        end
-      end
+  # Currently we support only streaming YAML and JSON objects so can immediately
+  # dump them to STDOUT
+  def dump_conversation(conversation, format:)
+    if format == "json"
+      puts conversation.to_json
+    else
+      puts conversation.to_yaml
     end
   end
 end
