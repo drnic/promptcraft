@@ -1,5 +1,4 @@
 require "concurrent"
-require "io/wait"
 require "langchain"
 require "tty-option"
 
@@ -97,7 +96,7 @@ class Promptcraft::Cli::RunCommand
       pool.wait_for_termination
 
       # if STDIN piped into the command, read stream of YAML conversations from STDIN
-      if stdin&.ready?
+      if io_ready?(stdin)
         conversations.push(*Promptcraft::Conversation.load_from_io(stdin))
       end
 
@@ -168,5 +167,10 @@ class Promptcraft::Cli::RunCommand
     else
       puts conversation.to_yaml
     end
+  end
+
+  def io_ready?(io)
+    return false unless io
+    IO.select([io], nil, nil, 5)
   end
 end

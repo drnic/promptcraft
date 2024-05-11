@@ -20,8 +20,14 @@ class Promptcraft::Conversation
   class << self
     def load_from_io(io = $stdin)
       conversations = []
-      YAML.load_stream(io) do |doc|
-        conversations << build_from(doc)
+      begin
+        YAML.load_stream(io) do |doc|
+          next unless doc
+          conversations << build_from(doc)
+        end
+      rescue Psych::SyntaxError => e
+        warn "Error: #{e.message}"
+        warn "Contents:\n#{io.read}"
       end
       conversations
     end
@@ -30,6 +36,7 @@ class Promptcraft::Conversation
       conversations = []
       File.open(filename, "r") do |file|
         YAML.parse_stream(file) do |doc|
+          next unless doc
           conversations << build_from(doc.to_ruby)
         end
       end

@@ -197,6 +197,41 @@ bundle exec exe/promptcraft \
 
 Now you have the output conversations in separate files, each with the system prompt and LLM used to produce the assistant replies.
 
+Can you use AI to produce lots of sample user messages and then see what how your system prompt would respond? Yes indeed. Now you're getting it.
+
+```plain
+echo "When you are asked to create a list you put each item in a YAML stream document like:
+
+---
+messages:
+- role: "user"
+  content: ITEM GOES HERE
+
+With each one separated new line. Say nothing else except producing YAML.
+" > tmp/prompt-list-20-hellos.txt
+
+bundle exec exe/promptcraft \
+  -c "Generate a list of 20 things a customer might say when they first ring into a hair salon phone service" \
+  -p tmp/prompt-list-20-hellos.txt \
+  --format json > tmp/hair-salon-20-hellos.json
+
+cat tmp/hair-salon-20-hellos.json | jq -r ".messages[1].content" \
+  > tmp/hair-salon-20-0000.txt
+```
+
+The file `tmp/hair-salon-20-0000.txt` now contains 20 user messages that you can use to initiate a conversation with your AI assistant system prompt.
+
+```plain
+bundle exec exe/promptcraft \
+  -p "I'm a hair salon phone service. I sell haircuts" \
+  -c tmp/hair-salon-20-0000.txt \
+  > tmp/hair-salon-20-replies-0001.yml
+```
+
+The file `tmp/hair-salon-20-replies-0001.yml` now contains the system prompt and the 20 user messages and the AI assistant replies.
+
+Iterate on your system prompt until you're happy with the responses.
+
 ## Installation
 
 Right now, you need to run the CLI from the source code.
