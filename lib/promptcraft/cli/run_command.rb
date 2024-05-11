@@ -1,3 +1,4 @@
+require "concurrent"
 require "io/wait"
 require "langchain"
 require "tty-option"
@@ -71,12 +72,14 @@ class Promptcraft::Cli::RunCommand
     elsif params.errors.any?
       warn params.errors.summary
     else
-      conversations = (params[:conversation] || []).each_with_object([]) do |filename, convos|
+      conversations = Concurrent::Array.new
+      # TODO: load in thread pool
+      (params[:conversation] || []).each do |filename|
         # check if --conversation=filename is an actual file, else store it in StringIO and pass to load_from_io
         if File.exist?(filename)
-          convos.push(*Promptcraft::Conversation.load_from_file(filename))
+          conversations.push(*Promptcraft::Conversation.load_from_file(filename))
         else
-          convos.push(*Promptcraft::Conversation.load_from_io(StringIO.new(filename)))
+          conversations.push(*Promptcraft::Conversation.load_from_io(StringIO.new(filename)))
         end
       end
 
@@ -108,7 +111,8 @@ class Promptcraft::Cli::RunCommand
       end
 
       # TODO: Rechat loop could be threaded to run many rechat conversations at once
-      updated_conversations = conversations.map do |conversation|
+      updated_conversations = Concurrent::Array.new
+      conversations.each do |conversation|
         llm = if params[:provider]
           Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
         elsif conversation.llm
@@ -121,7 +125,7 @@ class Promptcraft::Cli::RunCommand
 
         cmd = Promptcraft::Command::RechatConversationCommand.new(system_prompt:, conversation:, llm:)
         cmd.execute
-        cmd.updated_conversation
+        updated_conversations << cmd.updated_conversation
       end
 
       # Output. Currently we just output each conversation to the console as YAML
