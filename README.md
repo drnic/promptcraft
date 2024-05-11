@@ -154,7 +154,12 @@ messages:
     That's right! Each friend will get 3 slices of pizza! So, 6 divided by 2 is... 3!
 ```
 
-You'll notice, the LLM used (which defaults to Groq's `llama3-70b-8192` because its fast and cheap) is included in the output. See below for selecting a different LLM, such as `--provider openai --model chatgpt-4-turbo` or `--provider ollama --model llama3`.
+You'll notice, the LLM used (which defaults to Groq's `llama3-70b-8192` because its fast and cheap) is included in the output. See below for selecting a different LLM, such as:
+
+* `--provider groq --model llama3-70b-8192` (using `$GRQ_API_KEY`)
+* `--provider openai --model chatgpt-4-turbo` (using `$OPENAI_API_KEY`)
+* `--provider openrouter --model meta-llama/llama-3-8b-instruct:free` (using `$OPENROUTER_API_KEY`)
+* `--provider ollama --model llama3` (running on `http://localhost:11434`)
 
 Of course, you could pass each plain text user message using the `--conversation` argument too:
 
@@ -208,9 +213,11 @@ bundle exec exe/promptcraft \
 
 It defaults to `--provider groq --model llama3-70b-8192` and assumes you have `$GROQ_API_KEY` set in your environment.
 
-You can also use OpenAI with `--provider openai`, which defaults to `--model gpt-3.5-turbo`. It assumes you have `$OPENAI_API_KEY` set in your environment.
+You can also use [OpenAI](https://openai.com/) with `--provider openai`, which defaults to `--model gpt-3.5-turbo`. It assumes you have `$OPENAI_API_KEY` set in your environment.
 
-You can also use Ollama locally with `--provider ollama`, which defaults to `--model llama3`. It assumes your Ollama app is running on the default port.
+You can use [OpenRouter](https://openrouter.ai/) with `--provider openrouter`, which defaults to `--model meta-llama/llama-3-8b-instruct:free`. It assumes you have `$OPENROUTER_API_KEY` set in your environment.
+
+You can also use [Ollama](https://ollama.com/) locally with `--provider ollama`, which defaults to `--model llama3`. It assumes your Ollama app is running on the default port.
 
 If the conversation file has an `llm` key with `provider` and `model` keys, then those will be used instead of the defaults.
 
