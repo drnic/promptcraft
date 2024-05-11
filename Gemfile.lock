@@ -28,6 +28,7 @@ PATH
   specs:
     promptcraft (0.1.0)
       activesupport
+      concurrent-ruby
       faraday
       langchainrb
       ruby-openai
