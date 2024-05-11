@@ -10,8 +10,7 @@ module Promptcraft::Command
         messages = [{role: "user", content: "What is 2 + 2?"}]
         command = LlmChatCommand.new(messages:, llm:)
         message = command.execute
-        assert_equal message[:role], "assistant"
-        assert_equal message[:content], "The answer to 2 + 2 is 4."
+        assert_equal({role: "assistant", content: "The answer to 2 + 2 is 4."}, message)
       end
     end
 
@@ -21,8 +20,17 @@ module Promptcraft::Command
         messages = [{role: "user", content: "What is 2 + 2?"}]
         command = LlmChatCommand.new(messages:, llm:)
         message = command.execute
-        assert_equal message[:role], "assistant"
-        assert_equal message[:content], "The answer to 2 + 2 is 4."
+        assert_equal({role: "assistant", content: "The answer to 2 + 2 is 4."}, message)
+      end
+    end
+
+    def test_ollama
+      llm = Promptcraft::Llm.new(provider: "ollama")
+      VCR.use_cassette("command/llm_chat_command/test_ollama") do
+        messages = [{role: "user", content: "What is 2 + 2?"}]
+        command = LlmChatCommand.new(messages:, llm:)
+        message = command.execute
+        assert_equal({role: "assistant", content: "The answer to 2 + 2 is... (drumroll please)... 4!"}, message)
       end
     end
   end
