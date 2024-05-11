@@ -79,16 +79,22 @@ class Promptcraft::Cli::RunCommand
     elsif params.errors.any?
       warn params.errors.summary
     else
+      # Load files in threads
+      pool = Concurrent::FixedThreadPool.new(params[:threads])
       conversations = Concurrent::Array.new
       # TODO: load in thread pool
       (params[:conversation] || []).each do |filename|
-        # check if --conversation=filename is an actual file, else store it in StringIO and pass to load_from_io
-        if File.exist?(filename)
-          conversations.push(*Promptcraft::Conversation.load_from_file(filename))
-        else
-          conversations.push(*Promptcraft::Conversation.load_from_io(StringIO.new(filename)))
+        pool.post do
+          # check if --conversation=filename is an actual file, else store it in StringIO and pass to load_from_io
+          if File.exist?(filename)
+            conversations.push(*Promptcraft::Conversation.load_from_file(filename))
+          else
+            conversations.push(*Promptcraft::Conversation.load_from_io(StringIO.new(filename)))
+          end
         end
       end
+      pool.shutdown
+      pool.wait_for_termination
 
       # if STDIN piped into the command, read stream of YAML conversations from STDIN
       if stdin&.ready?
@@ -149,9 +155,7 @@ class Promptcraft::Cli::RunCommand
           end
         end
       end
-      # tell the pool to shutdown in an orderly fashion, allowing in progress work to complete
       pool.shutdown
-      # now wait for all work to complete, wait as long as it takes
       pool.wait_for_termination
     end
   end
