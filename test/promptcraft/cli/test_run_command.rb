@@ -65,7 +65,7 @@ module Promptcraft::Cli
           - role: user
             content: What is 2+2?
           - role: assistant
-            content: 2 + 2 equals 4.
+            content: 2 + 2 = 4
         OUTPUT
         assert_output(expected_output) { @cli.run }
       end

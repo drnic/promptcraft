@@ -8,29 +8,9 @@ require "langchain"
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
 
-if ENV["GROQ_API_KEY"]
-  @groq = @llm = Langchain::LLM::OpenAI.new(
-    api_key: ENV["GROQ_API_KEY"],
-    llm_options: {
-      uri_base: "https://api.groq.com/openai/"
-    },
-    default_options: {
-      chat_completion_model_name: "llama3-70b-8192"
-    }
-  )
-end
 
-# c = Promptcraft::Conversation.load_from_file("tmp/maths/start/basic.yml")
-# @llm.chat(messages: c.to_messages).completion
-# => "That's an easy one! The answer is... 4!"
-#
-# r = @llm.chat(messages: c.to_messages)
-# message = r.completions&.dig(0, "message")
-# => {"role"=>"assistant", "content"=>"That's an easy one! The answer is... 4!"}
-#
-# c = Promptcraft::Conversation.load_from_file("tmp/maths/start/basic.yml")
-# cmd = Promptcraft::Command::LlmChatCommand.new(messages: c.to_messages, llm: @llm)
-# cmd.execute
+@groq = Promptcraft::Llm.new(provider: "groq")
+@ollama = Promptcraft::Llm.new(provider: "ollama")
 
 require "irb"
 IRB.start(__FILE__)

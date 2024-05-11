@@ -74,7 +74,7 @@ module Promptcraft::Command
     def stub_openai_chat_completion(messages:, response_content:, model: "gpt-3.5-turbo")
       stub_request(:post, "https://api.openai.com/v1/chat/completions")
         .with(
-          body: {messages: messages, model: model, n: 1, temperature: 0.0}.to_json
+          body: {messages: messages, model: model, temperature: 0.0, n: 1}.to_json
         )
         .to_return(
           status: 200,

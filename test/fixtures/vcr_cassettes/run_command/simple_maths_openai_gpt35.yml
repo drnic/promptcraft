@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"system","content":"I like to solve maths problems."},{"role":"user","content":"What
-        is 2+2?"}],"model":"gpt-3.5-turbo","n":1,"temperature":0.0}'
+        is 2+2?"}],"model":"gpt-3.5-turbo","temperature":0.0,"n":1}'
     headers:
       Content-Type:
       - application/json
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 09 May 2024 08:55:20 GMT
+      - Sat, 11 May 2024 01:51:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
       Openai-Organization:
       - user-ujpyqwcjd0dls5k3amdh1vei
       Openai-Processing-Ms:
-      - '420'
+      - '542'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -52,35 +52,35 @@ http_interactions:
       X-Ratelimit-Reset-Tokens:
       - 10ms
       X-Request-Id:
-      - req_fe5b64106910eaf740c97f1f29a27f4d
+      - req_2ca2b6c469c40025bfdf7207134fa20d
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=pSodrRcIms1ihe51Nf3zG_1lDkv8lkptWf8ZnZ.gxGI-1715244920-1.0.1.1-bBLUu9Wp8b5r6vQSV.qHudaJFCyw1T6rhCf3D73K.ZrOVhPRc4V.dzftT8AwPfb6x6kHRCzp6ClC1noZ1MYapg;
-        path=/; expires=Thu, 09-May-24 09:25:20 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=GNjQMR68tOUhe0S.DQtEhO57s4lbQ4FjcOFKqos_FGU-1715392269-1.0.1.1-qpl3peGDc8KBKMSltlIpd.moueSrVnKaEDHnTdlCJ6gtsVrDE9vb3GVS6exlOiQUO1QZ480.fHp2W.kjLE2ErQ;
+        path=/; expires=Sat, 11-May-24 02:21:09 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=TQq_S5ght1n83.oMIdTUCJpFleturZp0OCQhUXflZ0Y-1715244920628-0.0.1.1-604800000;
+      - _cfuvid=9agVq4c1H8W.0UleVHZqAjxO3MK4mGJRQEc1E8FHw9c-1715392269993-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 8810784d3de6a87c-SYD
+      - 881e85b29896ab0b-SYD
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9MtqaLCo0d98PeLs3TKnAryBfJ3Nm",
+          "id": "chatcmpl-9NWBBRi6pEkfW2tiWXzq5eTdRldn4",
           "object": "chat.completion",
-          "created": 1715244920,
+          "created": 1715392269,
           "model": "gpt-3.5-turbo-0125",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "2 + 2 equals 4."
+                "content": "2 + 2 = 4"
               },
               "logprobs": null,
               "finish_reason": "stop"
@@ -88,10 +88,10 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 25,
-            "completion_tokens": 8,
-            "total_tokens": 33
+            "completion_tokens": 7,
+            "total_tokens": 32
           },
           "system_fingerprint": null
         }
-  recorded_at: Thu, 09 May 2024 08:55:20 GMT
+  recorded_at: Sat, 11 May 2024 01:51:10 GMT
 recorded_with: VCR 6.2.0
