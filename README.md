@@ -19,7 +19,7 @@ messages:
 Let's replay this single conversation with a new system prompt:
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --prompt "I'm terrible at maths. If I'm asked a maths question, I reply with a question." \
     --conversation examples/maths/start/already_answered.yml
 ```
@@ -69,7 +69,7 @@ messages:
 The CLI will replay each conversation with the new system prompt.
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation examples/maths/start/already_answered_multiple.yml \
     --prompt "I like cats. Answer any questions using cats."
 ```
@@ -118,7 +118,7 @@ When you're getting started, you don't even need to know the conversation file f
 
 ```plain
 echo "---\nWhat is 2+2?\n---\nWhat is 6 divided by 2?" | \
-  bundle exec exe/promptcraft --prompt "I solve maths using pizza metaphors."
+  promptcraft --prompt "I solve maths using pizza metaphors."
 ```
 
 The output will be our conversation YAML format, with the system prompt, the incoming user messages as separate conversations, and the assistant replies within each conversation:
@@ -164,7 +164,7 @@ You'll notice, the LLM used (which defaults to Groq's `llama3-70b-8192` because 
 Of course, you could pass each plain text user message using the `--conversation` argument too:
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation "What is 2+2?"
     --conversation "What is 6 divided by 2?" \
     --prompt "I solve maths using pizza metaphors."
@@ -173,13 +173,13 @@ bundle exec exe/promptcraft \
 Why does it output YAML? (or JSON if you pass `--json` flag) So that you can save it to a file; and then replay (or rechat) this new set of conversations in a minute with a new system prompt.
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation "What is 2+2?" \
     --conversation "What is 6 divided by 2?" \
     --prompt "I am happy person". \
   > tmp/maths-as-happy-person.yml
 
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation tmp/maths-as-happy-person.yml \
     --prompt "I solve maths using pizza metaphors." \
 > tmp/maths-with-pizza.yml
@@ -190,7 +190,7 @@ echo "I am an excellent maths tutor.
 When I'm asked a maths question, I will first
 ask a question in return to help the student." > tmp/prompt-maths-tutor.txt
 
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation tmp/maths-with-pizza.yml \
     --prompt tmp/prompt-maths-tutor.txt
 ```
@@ -210,7 +210,7 @@ messages:
 With each one separated new line. Say nothing else except producing YAML.
 " > tmp/prompt-list-20-hellos.txt
 
-bundle exec exe/promptcraft \
+promptcraft \
   -c "Generate a list of 20 things a customer might say when they first ring into a hair salon phone service" \
   -p tmp/prompt-list-20-hellos.txt \
   --format json > tmp/hair-salon-20-hellos.json
@@ -222,7 +222,7 @@ cat tmp/hair-salon-20-hellos.json | jq -r ".messages[1].content" \
 The file `tmp/hair-salon-20-0000.txt` now contains 20 user messages that you can use to initiate a conversation with your AI assistant system prompt.
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
   -p "I'm a hair salon phone service. I sell haircuts" \
   -c tmp/hair-salon-20-0000.txt \
   > tmp/hair-salon-20-replies-0001.yml
@@ -263,7 +263,25 @@ Tools you might want to use in conjunction with `promptcraft`:
 
 ## Installation
 
-Right now, you need to run the CLI from the source code.
+Right now, you can either install with:
+
+* Homebrew
+* Or, you need to run the CLI from the source code
+
+Whilst this is a RubyGem, it currently requires some Git branches that are not yet released. The Homebrew recipe will install the gem from the source code using `bundle install`. Similarly, if you run it from source then you'll need to run `bundle install` to manage the dependencies.
+
+Once the Git branches are released, then the `promptcraft` gem will be installable via RubyGems.
+
+### Homebrew
+
+The project is currently distributed by the [Mocra](https://mocra.com) Homebrew tap `mocra/ai`.
+
+```plain
+brew tap mocra/ai
+brew install promptcraft
+```
+
+### Run from Source
 
 ```plain
 git clone https://github.com/drnic/promptcraft
@@ -275,7 +293,9 @@ bundle exec exe/promptcraft \
     --provider groq
 ```
 
-It defaults to `--provider groq --model llama3-70b-8192` and assumes you have `$GROQ_API_KEY` set in your environment.
+### Configuration
+
+The `promptcraft` CLI defaults to `--provider groq --model llama3-70b-8192` and assumes you have `$GROQ_API_KEY` set in your environment.
 
 You can also use [OpenAI](https://openai.com/) with `--provider openai`, which defaults to `--model gpt-3.5-turbo`. It assumes you have `$OPENAI_API_KEY` set in your environment.
 
@@ -286,7 +306,7 @@ You can also use [Ollama](https://ollama.com/) locally with `--provider ollama`,
 If the conversation file has an `llm` key with `provider` and `model` keys, then those will be used instead of the defaults.
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation examples/maths/start/already_answered_gpt4.yml \
     --prompt "I always reply with a question"
 
@@ -311,7 +331,7 @@ The following example commands assume you have `$GROQ_API_KEY` and will use Groq
 Run `promptcraft` with no arguments to get a default prompt and an initial assistant message.
 
 ```plain
-bundle exec exe/promptcraft
+promptcraft
 ```
 
 The output might be:
@@ -327,13 +347,13 @@ messages:
 Provide a different provider, such as `openai` (which assumes you have `$OPENAI_API_KEY` set in your environment).
 
 ```plain
-bundle exec exe/promptcraft --provider openai
+promptcraft --provider openai
 ```
 
 Or you could provide your own system prompt, and it will generate an initial assistant message.
 
 ```plaim
-bundle exec exe/promptcraft --prompt "I like to solve maths problems."
+promptcraft --prompt "I like to solve maths problems."
 ```
 
 The output might be:
@@ -367,26 +387,26 @@ The primary point of `promptcraft` is to replay conversations with a new system 
 An example of the `--conversation` option:
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation examples/maths/start/basic.yml
 ```
 
 You can also pipe a stream of conversation YAML into `promptcraft` via STDIN
 
 ```plain
-echo "---\nsystem_prompt: I like to solve maths problems.\nmessages:\n- role: \"user\"\n  content: \"What is 2+2?\"" | bundle exec exe/promptcraft
+echo "---\nsystem_prompt: I like to solve maths problems.\nmessages:\n- role: \"user\"\n  content: \"What is 2+2?\"" | promptcraft
 ```
 
 JSON is valid YAML, so you can also use JSON:
 
 ```plain
-echo "{\"system_prompt\": \"I like to solve maths problems.\", \"messages\": [{\"role\": \"user\", \"content\": \"What is 2+2?\"}]}" | bundle exec exe/promptcraft
+echo "{\"system_prompt\": \"I like to solve maths problems.\", \"messages\": [{\"role\": \"user\", \"content\": \"What is 2+2?\"}]}" | promptcraft
 ```
 
 Or pipe one or more files into `promptcraft`:
 
 ```plain
-( cat examples/maths/start/basic.yml ; cat examples/maths/start/already_answered.yml ) | bundle exec exe/promptcraft
+( cat examples/maths/start/basic.yml ; cat examples/maths/start/already_answered.yml ) | promptcraft
 ```
 
 As long as the input is a stream of YAML documents (separated by `---`), it will be processed.
@@ -421,7 +441,7 @@ messages:
 When we replay the conversation with the same system prompt (by omitting the `--prompt` option), it will add the missing assistant reply:
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation examples/maths/start/basic.yml
 ```
 
@@ -445,7 +465,7 @@ messages:
 Here are some previously [generated limericks](examples/maths/start/many_limericks.yml). To regenerate them to start with letter "E" on each line:
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation examples/maths/start/many_limericks.yml \
     --prompt "I am excellent at limericks. I always start each line with the letter E."
 ```
@@ -453,7 +473,7 @@ bundle exec exe/promptcraft \
 It might still include some preamble in each response. To try to encourage the LLM to remove it:
 
 ```plain
-bundle exec exe/promptcraft \
+promptcraft \
     --conversation examples/maths/start/many_limericks.yml \
     --prompt "I am excellent at limericks. I always start each line with the letter E. This is very important. Only return the limerick without any other comments."
 ```
