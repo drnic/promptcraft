@@ -3,7 +3,8 @@ require "active_support/core_ext/module/delegation"
 class Promptcraft::Llm
   DEFAULT_PROVIDER = "groq"
 
-  attr_reader :langchain, :provider, :model
+  attr_reader :langchain
+  attr_accessor :provider, :model
 
   delegate_missing_to :langchain
 
