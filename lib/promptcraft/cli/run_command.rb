@@ -137,6 +137,7 @@ class Promptcraft::Cli::RunCommand
           else
             Promptcraft::Llm.new
           end
+          llm.model = params[:model] if params[:model]
 
           system_prompt = new_system_prompt || conversation.system_prompt
 
