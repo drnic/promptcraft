@@ -232,6 +232,15 @@ The file `tmp/hair-salon-20-replies-0001.yml` now contains the system prompt and
 
 Iterate on your system prompt until you're happy with the responses.
 
+## See Also
+
+Tools you might want to use in conjunction with `promptcraft`:
+
+* [`yq`](https://mikefarah.gitbook.io/yq/) is a lightweight and portable command-line YAML processor. It's useful for extracting and modifying YAML files.
+* [`jq`](https://stedolan.github.io/jq/) is a lightweight and flexible command-line JSON processor. It's useful for extracting and modifying JSON files.
+* [`xq`](https://github.com/sibprogrammer/xq) is a lightweight and flexible command-line XML processor. It's useful for extracting and modifying XML files.
+* `tee` takes stdout from one command and writes it to a file and also to stdout. It's useful for saving the output of a command to a file and then piping it to another command.
+
 ## Installation
 
 Right now, you need to run the CLI from the source code.
