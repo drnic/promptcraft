@@ -236,10 +236,30 @@ Iterate on your system prompt until you're happy with the responses.
 
 Tools you might want to use in conjunction with `promptcraft`:
 
-* [`yq`](https://mikefarah.gitbook.io/yq/) is a lightweight and portable command-line YAML processor. It's useful for extracting and modifying YAML files.
-* [`jq`](https://stedolan.github.io/jq/) is a lightweight and flexible command-line JSON processor. It's useful for extracting and modifying JSON files.
-* [`xq`](https://github.com/sibprogrammer/xq) is a lightweight and flexible command-line XML processor. It's useful for extracting and modifying XML files.
 * `tee` takes stdout from one command and writes it to a file and also to stdout. It's useful for saving the output of a command to a file and then piping it to another command.
+
+    For example, to view the output of `promptcraft` and save it to a file at the same time:
+
+    ```plain
+    promptcraft ... | tee output.yml
+    ```
+* [`yq`](https://mikefarah.gitbook.io/yq/) is a lightweight and portable command-line YAML processor. It's useful for extracting and modifying YAML files.
+
+    For example, to extract the 2nd message from a conversation:
+
+    ```plain
+    cat conversation.yml | yq .messages.1.content
+    ```
+
+* [`xq`](https://github.com/sibprogrammer/xq) is a lightweight and flexible command-line XML processor. It's useful for extracting and modifying XML files.
+
+    If the message content contains some XML, e.g. `<users_json>{...}</users_json>`, and you want the contents:
+
+    ```plain
+    cat conversation.yml | yq .messages.1.content | xq -x //users_json
+    ```
+
+* [`jq`](https://stedolan.github.io/jq/) is a lightweight and flexible command-line JSON processor. It's useful for extracting and modifying JSON files.
 
 ## Installation
 
