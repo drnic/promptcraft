@@ -274,10 +274,10 @@ Once the Git branches are released, then the `promptcraft` gem will be installab
 
 ### Homebrew
 
-The project is currently distributed by the [Mocra](https://mocra.com) Homebrew tap `mocra/ai`.
+The project is currently distributed by the Homebrew tap [`drnic/ai`](https://github.com/drnic/homebrew-ai).
 
 ```plain
-brew tap mocra/ai
+brew tap drnic/ai
 brew install promptcraft
 ```
 
@@ -506,7 +506,7 @@ rake release:upload_package
 rake release:generate_homebrew_formula
 ```
 
-Now copy `tmp/promptcraft.rb` formula into <https://github.com/mocra/homebrew-ai> and push.
+Now copy `tmp/promptcraft.rb` formula into <https://github.com/drnic/homebrew-ai> and push.
 
 ## Contributing
 
