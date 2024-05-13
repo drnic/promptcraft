@@ -13,6 +13,7 @@ class Promptcraft::Llm
     @langchain = case provider
     when "groq"
       @model = model || "llama3-70b-8192"
+      require "openai"
       Langchain::LLM::OpenAI.new(
         api_key: api_key || ENV.fetch("GROQ_API_KEY"),
         llm_options: {uri_base: "https://api.groq.com/openai/"},
@@ -20,12 +21,14 @@ class Promptcraft::Llm
       )
     when "openai"
       @model = model || "gpt-3.5-turbo"
+      require "openai"
       Langchain::LLM::OpenAI.new(
         api_key: api_key || ENV.fetch("OPENAI_API_KEY"),
         default_options: {chat_completion_model_name: @model}
       )
     when "openrouter"
       @model = model || "meta-llama/llama-3-8b-instruct:free"
+      require "openai"
       Langchain::LLM::OpenAI.new(
         api_key: api_key || ENV.fetch("OPENROUTER_API_KEY"),
         llm_options: {uri_base: "https://openrouter.ai/api/"},

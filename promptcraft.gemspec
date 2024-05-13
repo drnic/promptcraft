@@ -38,7 +38,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "langchainrb"
   spec.add_dependency "faraday"
   spec.add_dependency "ruby-openai"
-
   spec.add_dependency "tty-option"
 
   spec.add_development_dependency "rake"
