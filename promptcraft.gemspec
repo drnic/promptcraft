@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activesupport"
   spec.add_dependency "concurrent-ruby"
-  spec.add_dependency "langchainrb"
+  spec.add_dependency "langchainrb", ">= 0.12.1"
   spec.add_dependency "faraday"
   spec.add_dependency "ruby-openai"
   spec.add_dependency "tty-option"

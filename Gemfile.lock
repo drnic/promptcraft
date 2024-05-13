@@ -8,21 +8,6 @@ GIT
       faraday (>= 1)
       faraday-multipart (>= 1)
 
-GIT
-  remote: https://github.com/patterns-ai-core/langchainrb.git
-  revision: b8169ddfbd56950e9af817a0a24d5ae44096339e
-  specs:
-    langchainrb (0.12.0)
-      activesupport (>= 7.0.8)
-      baran (~> 0.1.9)
-      colorize (~> 1.1.0)
-      json-schema (~> 4)
-      matrix
-      pragmatic_segmenter (~> 0.3.0)
-      tiktoken_ruby (~> 0.0.8)
-      to_bool (~> 2.0.0)
-      zeitwerk (~> 2.5)
-
 PATH
   remote: .
   specs:
@@ -30,7 +15,7 @@ PATH
       activesupport
       concurrent-ruby
       faraday
-      langchainrb
+      langchainrb (>= 0.12.1)
       ruby-openai
       tty-option
 
@@ -87,6 +72,16 @@ GEM
     json (2.7.2)
     json-schema (4.3.0)
       addressable (>= 2.8)
+    langchainrb (0.12.1)
+      activesupport (>= 7.0.8)
+      baran (~> 0.1.9)
+      colorize (~> 1.1.0)
+      json-schema (~> 4)
+      matrix
+      pragmatic_segmenter (~> 0.3.0)
+      tiktoken_ruby (~> 0.0.8)
+      to_bool (~> 2.0.0)
+      zeitwerk (~> 2.5)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
     matrix (0.4.2)
@@ -172,7 +167,6 @@ PLATFORMS
 DEPENDENCIES
   faraday (~> 2.0)
   fpm (~> 1.15)
-  langchainrb!
   minitest (~> 5.0)
   promptcraft!
   rake

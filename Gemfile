@@ -8,7 +8,7 @@ gemspec
 gem "standardrb", "~> 1.0"
 gem "faraday", "~> 2.0"
 
-gem "langchainrb", github: "patterns-ai-core/langchainrb"
+# gem "langchainrb", github: "patterns-ai-core/langchainrb"
 # gem "langchainrb", path: "../langchainrb"
 #
 # Removes a warning; not required for promptcraft
