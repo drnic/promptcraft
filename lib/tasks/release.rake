@@ -32,7 +32,7 @@ namespace :release do
     name = spec.name
     version = spec.version
     sha256sum = File.read("#{name}-#{version}.sha256").strip
-    url = `gh release view v0.1.0 --json assets | jq -r '.assets[] | select(.name == "#{name}-#{version}.tar.xz") | .url'`.strip
+    url = `gh release view v#{version} --json assets | jq -r '.assets[] | select(.name == "#{name}-#{version}.tar.xz") | .url'`.strip
 
     formula_name = spec.name.capitalize
     class_name = formula_name.gsub(/_\w/) { |match| match[1].upcase }.to_s
