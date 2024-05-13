@@ -492,10 +492,18 @@ To set new version number:
 gem bump --version [patch|minor|major]
 ```
 
-To tag and release:
+To tag and release Rubygem to <Rubygems.org>:
 
 ```plain
 rake release
+```
+
+To update Homebrew formula:
+
+```plain
+rake release:build_package
+rake release:upload_package
+rake release:generate_homebrew_formula
 ```
 
 ## Contributing
