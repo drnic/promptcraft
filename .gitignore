@@ -9,4 +9,5 @@
 /TAGS
 .DS_Store
 /vendor/cache
-promptcraft.tar*
+promptcraft*.tar*
+promptcraft*.sha256
