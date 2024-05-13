@@ -268,9 +268,11 @@ Right now, you can either install with:
 * Homebrew
 * Or, you need to run the CLI from the source code
 
-Whilst this is a RubyGem, it currently requires some Git branches that are not yet released. The Homebrew recipe will install the gem from the source code using `bundle install`. Similarly, if you run it from source then you'll need to run `bundle install` to manage the dependencies.
+Whilst this is a RubyGem, it currently requires some Git branches that are not yet released. The Homebrew recipe takes a big tarball of all source code and dependencies and installs it. The tarball is also available via [Github Releases](https://github.com/drnic/promptcraft/releases).
 
-Once the Git branches are released, then the `promptcraft` gem will be installable via RubyGems.
+Once the Git branches are released, then the `promptcraft` gem will also be installable via RubyGems.
+
+It requires Ruby 3.3 or later. Mostly because I like the new syntax features.
 
 ### Homebrew
 
