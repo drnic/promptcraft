@@ -49,16 +49,21 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
+    arr-pm (0.0.12)
     ast (2.4.2)
+    backports (3.25.0)
     baran (0.1.11)
     base64 (0.2.0)
     bigdecimal (3.1.8)
+    cabin (0.9.0)
+    clamp (1.0.1)
     colorize (1.1.0)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
     crack (1.0.0)
       bigdecimal
       rexml
+    dotenv (3.1.2)
     drb (2.2.1)
     event_stream_parser (1.0.0)
     faraday (2.9.0)
@@ -67,9 +72,18 @@ GEM
       multipart-post (~> 2)
     faraday-net_http (3.1.0)
       net-http
+    fpm (1.15.1)
+      arr-pm (~> 0.0.11)
+      backports (>= 2.6.2)
+      cabin (>= 0.6.0)
+      clamp (~> 1.0.0)
+      pleaserun (~> 0.0.29)
+      rexml
+      stud
     hashdiff (1.1.0)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
+    insist (1.0.0)
     json (2.7.2)
     json-schema (4.3.0)
       addressable (>= 2.8)
@@ -78,6 +92,7 @@ GEM
     matrix (0.4.2)
     minitest (5.22.3)
     multipart-post (2.4.0)
+    mustache (0.99.8)
     mutex_m (0.2.0)
     net-http (0.4.1)
       uri
@@ -85,6 +100,13 @@ GEM
     parser (3.3.1.0)
       ast (~> 2.4.1)
       racc
+    pleaserun (0.0.32)
+      cabin (> 0)
+      clamp
+      dotenv
+      insist
+      mustache (= 0.99.8)
+      stud
     pragmatic_segmenter (0.3.23)
       unicode
     public_suffix (5.0.5)
@@ -125,6 +147,7 @@ GEM
       rubocop-performance (~> 1.20.2)
     standardrb (1.0.1)
       standard
+    stud (0.0.23)
     tiktoken_ruby (0.0.8)
       rb_sys (>= 0.9.86)
     tiktoken_ruby (0.0.8-arm64-darwin)
@@ -148,6 +171,7 @@ PLATFORMS
 
 DEPENDENCIES
   faraday (~> 2.0)
+  fpm (~> 1.15)
   langchainrb!
   minitest (~> 5.0)
   promptcraft!

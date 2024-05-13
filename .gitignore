@@ -10,3 +10,4 @@
 .DS_Store
 /vendor/cache
 promptcraft.tar*
+promptcraft.sha256

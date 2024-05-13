@@ -13,3 +13,5 @@ gem "langchainrb", github: "patterns-ai-core/langchainrb"
 #
 # Removes a warning; not required for promptcraft
 gem "ruby-openai", github: "drnic/ruby-openai", branch: "remove-warning-no-org"
+
+gem "fpm", "~> 1.15"

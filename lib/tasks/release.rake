@@ -3,9 +3,22 @@
 require "rubygems"
 require "rake"
 
-namespace :homebrew do
+namespace :release do
+  task :build_package do
+    system "bundle config set cache_all true"
+    system "bundle package"
+    name = Gem::Specification.load(Dir.glob("*.gemspec").first).name
+    version = Gem::Specification.load(Dir.glob("*.gemspec").first).version
+    license = Gem::Specification.load(Dir.glob("*.gemspec").first).license
+    system "rm -f #{name}.tar* #{name}.sha256"
+    system "fpm -s dir -t tar --name #{name} --version #{version} --license #{license} --exclude .git --exclude test --exclude spec ."
+    system "xz -z #{name}.tar"
+    sha = `shasum -a 256 #{name}.tar.xz`.split(" ").first
+    File.write("#{name}.sha256", sha)
+  end
+
   desc "Generate Homebrew formula"
-  task :generate_formula do
+  task :generate_homebrew_formula do
     spec = Gem::Specification.load(Dir.glob("*.gemspec").first)
 
     formula_name = spec.name.capitalize
