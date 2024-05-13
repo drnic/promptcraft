@@ -8,3 +8,4 @@
 /tmp/
 /TAGS
 .DS_Store
+/vendor/cache
