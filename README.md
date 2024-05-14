@@ -517,7 +517,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 To set new version number:
 
 ```plain
+gem install gem-release
 gem bump --version [patch|minor|major]
+bundle install
 ```
 
 To tag and release Rubygem to <Rubygems.org>:
