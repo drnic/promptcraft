@@ -45,13 +45,16 @@ namespace :release do
         url "#{url}"
         sha256 "#{sha256sum}"
 
-        depends_on "ruby@3.3"
+        depends_on "ruby"
 
         def install
+          ENV["GEM_HOME"] = libexec
+
           # Extract all files to libexec, which is a common Homebrew practice for third-party tools
           libexec.install Dir["*"]
-          # Create a symbolic link for the executable in Homebrew's bin directory
-          bin.install_symlink "\#{libexec}/exe/promptcraft" => "promptcraft"
+
+          bin.install libexec/"exe/promptcraft"
+          bin.env_script_all_files(libexec/"bin", GEM_HOME: ENV.fetch("GEM_HOME"))
         end
 
         test do

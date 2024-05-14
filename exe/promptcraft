@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+file_name = File.dirname(__FILE__) + "/../lib"
+$LOAD_PATH.unshift(file_name) unless $LOAD_PATH.include?(file_name)
+
 require "promptcraft"
 
 cmd = Promptcraft::Cli::RunCommand.new
