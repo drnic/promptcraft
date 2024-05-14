@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    promptcraft (0.1.1)
+    promptcraft (0.1.2)
       activesupport
       concurrent-ruby
       faraday

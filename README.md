@@ -520,6 +520,8 @@ To set new version number:
 gem install gem-release
 gem bump --version [patch|minor|major]
 bundle install
+git add Gemfile.lock; git commit --amend --no-edit
+git push
 ```
 
 To tag and release Rubygem to <Rubygems.org>:
