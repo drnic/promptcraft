@@ -4,13 +4,14 @@ class Promptcraft::Conversation
   include Promptcraft::Helpers
   extend Promptcraft::Helpers
 
-  attr_accessor :system_prompt, :messages
+  attr_accessor :system_prompt, :messages, :temperature
   attr_accessor :llm
 
-  def initialize(system_prompt:, messages: [], llm: nil)
+  def initialize(system_prompt:, messages: [], llm: nil, temperature: 0)
     @system_prompt = system_prompt
     @messages = messages
     @llm = llm
+    @temperature = temperature
   end
 
   def add_message(role:, content:)
@@ -85,9 +86,9 @@ class Promptcraft::Conversation
   #   content: 2 + 2 = 4
   def to_yaml
     YAML.dump(deep_stringify_keys({
-      system_prompt: @system_prompt&.strip,
-      llm: @llm&.to_h,
-      messages: @messages
+      system_prompt: system_prompt&.strip,
+      llm: llm&.to_h,
+      messages:
     }.compact))
   end
 
