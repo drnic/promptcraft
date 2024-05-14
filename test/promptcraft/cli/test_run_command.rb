@@ -16,6 +16,14 @@ module Promptcraft::Cli
       assert_output("", /Usage:/) { cli_run }
     end
 
+    def test_no_providers_available
+      # Stub out all calls to ENV
+      ENV.stub :[], nil do
+        @cli.parse([])
+        assert_output("", "No providers available") { cli_run }
+      end
+    end
+
     def test_conversation_stream
       VCR.use_cassette("run_command/simple_maths_groq_llama3_70b") do
         @cli.parse(%w[--conversation test/fixtures/prompts/simple_maths_stream.yml])
