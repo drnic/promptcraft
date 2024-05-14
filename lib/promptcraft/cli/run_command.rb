@@ -86,11 +86,11 @@ class Promptcraft::Cli::RunCommand
     elsif params.errors.any?
       warn params.errors.summary
     else
+      warn params.inspect if params[:debug]
       # Load files in threads
       threads ||= params[:threads]
       pool = Concurrent::FixedThreadPool.new(threads)
       conversations = Concurrent::Array.new
-      # TODO: load in thread pool
       (params[:conversation] || []).each do |filename|
         pool.post do
           # check if --conversation=filename is an actual file, else store it in StringIO and pass to load_from_io
@@ -112,6 +112,7 @@ class Promptcraft::Cli::RunCommand
       if conversations.empty?
         conversations << Promptcraft::Conversation.new(system_prompt: "You are helpful. If you're first, then ask a question. You like brevity.")
       end
+      warn conversations.inspect if params[:debug]
 
       if (prompt = params[:prompt])
         # if prompt is a file, load it; else set the prompt to the value
