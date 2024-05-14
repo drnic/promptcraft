@@ -33,6 +33,13 @@ class Promptcraft::Cli::RunCommand
     desc "String or filename containing system prompt"
   end
 
+  option :temperature do
+    short "-t"
+    long "--temperature temperature"
+    desc "Temperature for chat completion"
+    convert :float
+  end
+
   flag :help do
     short "-h"
     long "--help"
@@ -72,14 +79,16 @@ class Promptcraft::Cli::RunCommand
     desc "Enable debug mode"
   end
 
-  def run(stdin: nil)
+  # Arguments are for the benefit of test suite
+  def run(stdin: nil, threads: nil)
     if params[:help]
       warn help
     elsif params.errors.any?
       warn params.errors.summary
     else
       # Load files in threads
-      pool = Concurrent::FixedThreadPool.new(params[:threads])
+      threads ||= params[:threads]
+      pool = Concurrent::FixedThreadPool.new(threads)
       conversations = Concurrent::Array.new
       # TODO: load in thread pool
       (params[:conversation] || []).each do |filename|
@@ -123,7 +132,7 @@ class Promptcraft::Cli::RunCommand
       end
 
       # Process each conversation in a concurrent thread via a thread pool
-      pool = Concurrent::FixedThreadPool.new(params[:threads])
+      pool = Concurrent::FixedThreadPool.new(threads)
       mutex = Mutex.new
 
       updated_conversations = Concurrent::Array.new
@@ -138,6 +147,7 @@ class Promptcraft::Cli::RunCommand
             Promptcraft::Llm.new
           end
           llm.model = params[:model] if params[:model]
+          llm.temperature = params[:temperature] if params[:temperature]
 
           system_prompt = new_system_prompt || conversation.system_prompt
 

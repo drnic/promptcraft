@@ -462,6 +462,32 @@ messages:
   content: That's an easy one! The answer is... 4!
 ```
 
+### Set the temperature
+
+The `--temperature` option controls the randomness of the assistant's responses. The default for each provider is typically `0.0`. Lower values will produce more deterministic responses, while higher values will produce more creative responses.
+
+```plain
+promptcraft \
+    --conversation examples/maths/start/basic.yml \
+    --temperature 0.5
+```
+
+The output YAML for each conversation will store the `temperature` value used in the `llm:` section:
+
+```yaml
+---
+system_prompt: I like to solve maths problems.
+llm:
+  provider: groq
+  model: llama3-70b-8192
+  temperature: 0.5
+messages:
+- role: user
+  content: What is 2+2?
+- role: assistant
+  content: That's an easy one! The answer is... 4!
+```
+
 ### Limericks
 
 Here are some previously [generated limericks](examples/maths/start/many_limericks.yml). To regenerate them to start with letter "E" on each line:

@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.groq.com/openai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"system","content":"I like to solve maths problems."},{"role":"user","content":"What
+        is 2+2?"}],"model":"llama3-70b-8192","temperature":0.0,"n":1}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <GROQ_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 May 2024 05:20:57 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - private, max-age=0, no-store, no-cache, must-revalidate
+      Vary:
+      - Origin
+      X-Ratelimit-Limit-Requests:
+      - '14400'
+      X-Ratelimit-Limit-Tokens:
+      - '6000'
+      X-Ratelimit-Remaining-Requests:
+      - '14399'
+      X-Ratelimit-Remaining-Tokens:
+      - '5980'
+      X-Ratelimit-Reset-Requests:
+      - 6s
+      X-Ratelimit-Reset-Tokens:
+      - 200ms
+      X-Request-Id:
+      - req_01hxtrqwwzfmpa4y16r6dxnh2p
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=xxz1SHh9krvkS.8XAZCkwjYIK2AbP.5zdw5BsgmiD9U-1715664057-1.0.1.1-SIJVd68A6JjmcfBLqWASrwY.5cBG62qh3HQZQL3cJW7uWGuziAzkA5UtvNV7mK_azQUQm1CKseGPNsfUphU3sQ;
+        path=/; expires=Tue, 14-May-24 05:50:57 GMT; domain=.groq.com; HttpOnly; Secure;
+        SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 883871252e50dfc1-SYD
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"chatcmpl-aefe82ce-de7e-4fae-8a59-b61a97daef3a","object":"chat.completion","created":1715664057,"model":"llama3-70b-8192","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        an easy one! The answer is... 4!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"prompt_time":0.086,"completion_tokens":13,"completion_time":0.042,"total_tokens":42,"total_time":0.128},"system_fingerprint":"fp_87cbfbbc4d","x_groq":{"id":"req_01hxtrqwwzfmpa4y16r6dxnh2p"}}
+
+        '
+  recorded_at: Tue, 14 May 2024 05:20:57 GMT
+recorded_with: VCR 6.2.0
