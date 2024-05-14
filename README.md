@@ -538,6 +538,13 @@ rake release:generate_homebrew_formula
 
 Now copy `tmp/promptcraft.rb` formula into <https://github.com/drnic/homebrew-ai> and push.
 
+```plain
+git clone https://github.com/drnic/homebrew-ai tmp/homebrew-ai
+cp tmp/promptcraft.rb tmp/homebrew-ai
+( cd tmp/homebrew-ai; git add .; gca -m "Bump promptcraft"; git push )
+rm -rf tmp/homebrew-ai
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/drnic/promptcraft. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/drnic/promptcraft/blob/develop/CODE_OF_CONDUCT.md).
