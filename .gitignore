@@ -11,3 +11,4 @@
 /vendor/cache
 promptcraft*.tar*
 promptcraft*.sha256
+.env*
