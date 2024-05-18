@@ -2,7 +2,7 @@
 
 Try out new system prompts on your existing AI conversations. Over and over until you're happy.
 
-The `promptcraft` CLI let's you replay a conversation between a user and an AI assistant, but with a new system prompt.
+The `promptcraft` CLI lets you replay a conversation between a user and an AI assistant, but with a new system prompt.
 
 Conversations are stored in YAML files that look like:
 
