@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "The promptcraft CLI let's you replay a conversation between a user and an AI assistant, but with a new system prompt."
   spec.homepage = "https://github.com/drnic/promptcraft"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.3.0"
+  spec.required_ruby_version = ">= 3.2.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
