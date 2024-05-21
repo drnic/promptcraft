@@ -57,6 +57,11 @@ class Promptcraft::Cli::RunCommand
     desc "Provider name to use for chat completion"
   end
 
+  option :api_key do
+    long "--api-key api_key"
+    desc "API key for the provider"
+  end
+
   option :format do
     short "-f"
     long "--format format"
@@ -139,8 +144,8 @@ class Promptcraft::Cli::RunCommand
       conversations.each do |conversation|
         pool.post do
           # warn "Post processing conversation for #{conversation.messages.inspect}"
-          llm = if params[:provider]
-            Promptcraft::Llm.new(provider: params[:provider], model: params[:model])
+          llm = if params[:provider] && params[:api_key]
+            Promptcraft::Llm.new(provider: params[:provider], model: params[:model], api_key: params[:api_key])
           elsif conversation.llm
             conversation.llm
           else
